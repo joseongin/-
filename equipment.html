@@ -67,8 +67,52 @@
 }
 .deep-grid.reverse { direction: rtl; }
 .deep-grid.reverse > * { direction: ltr; }
-.deep-img-wrap { border-radius: var(--rl); overflow: hidden; box-shadow: var(--sh-m); }
-.deep-img-wrap img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; background: #d8e4f0; }
+.deep-img-wrap {
+  position: relative;
+  border-radius: var(--rl);
+  overflow: hidden;
+  box-shadow: 0 28px 72px rgba(11,31,58,.18), 0 0 0 1px rgba(184,147,100,.18);
+}
+.deep-img-wrap img {
+  width: 100%; aspect-ratio: 4/3;
+  object-fit: cover; display: block;
+  background: #d8e4f0;
+  transition: transform 1s cubic-bezier(0.76,0,0.24,1);
+}
+.deep-img-wrap:hover img { transform: scale(1.03); }
+/* 상단 골드 배지 라인 */
+.deep-img-wrap::before {
+  content: '';
+  position: absolute; top: -16px; left: -16px; right: 32px; bottom: 32px;
+  border: 1px solid rgba(184,147,100,.2);
+  border-radius: calc(var(--rl) + 2px);
+  pointer-events: none; z-index: 0;
+}
+/* 이미지 좌하단 골드 그라디언트 장식 */
+.deep-img-wrap::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(11,31,58,.22) 0%,
+    transparent 40%
+  );
+  pointer-events: none;
+}
+/* 이미지 라벨 배지 */
+.deep-img-badge {
+  position: absolute; z-index: 2;
+  bottom: 20px; left: 20px;
+  background: rgba(11,31,58,.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(184,147,100,.32);
+  border-radius: 3px;
+  padding: 8px 16px;
+  color: var(--gold-l);
+  font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase;
+}
 .deep-tag {
   font-size: .72rem; font-weight: 700; letter-spacing: .12em;
   color: var(--gold); text-transform: uppercase; margin-bottom: 14px;
@@ -300,7 +344,8 @@
   <div class="wrap">
     <div class="deep-grid rv">
       <div class="deep-img-wrap">
-        <img src="img/hero-bg.jpg" alt="조성인 원장 검사 장면" loading="lazy"/>
+        <img src="img/zeiss-device.jpg" alt="ZEISS i.Profiler plus 정밀 검안 장비" loading="lazy"/>
+        <div class="deep-img-badge">ZEISS · i.Profiler&#174; plus</div>
       </div>
       <div>
         <p class="deep-tag">FLAGSHIP INSTRUMENT</p>
@@ -390,7 +435,8 @@
         </ul>
       </div>
       <div class="deep-img-wrap">
-        <img src="img/services-fitting.jpg" alt="트라이얼 렌즈 처방 장면" loading="lazy"/>
+        <img src="img/trial-lens.jpg" alt="CHARMANT 트라이얼 렌즈 프레임" loading="lazy"/>
+        <div class="deep-img-badge">CHARMANT · Trial Lens Frame</div>
       </div>
     </div>
   </div>
