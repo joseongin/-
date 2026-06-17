@@ -40,37 +40,36 @@
   50%      { opacity: 1;  transform: scale(1.012); }
 }
 
-/* ── 슬라이드쇼 크로스페이드 (12s on / 2s fade / 2s off × 2장 = 24s 루프) ── */
-/* 슬라이드 1: 0% 보임 → 87.5% 보임 → 91.7% 페이드 → 100% 숨김 */
+/* ── 슬라이드쇼 크로스페이드 + kenburns (24s 루프) ── */
+/* 슬라이드1: 0~50% on, 50~58% 페이드아웃 */
 @keyframes hero-slide-1 {
-  0%       { opacity: 1; }
-  79%      { opacity: 1; }
-  91.7%    { opacity: 0; }
-  100%     { opacity: 0; }
+  0%,45%  { opacity: 1; }
+  57%     { opacity: 0; }
+  96%,100%{ opacity: 0; }
 }
-/* 슬라이드 2: 0% 숨김 → 50% 등장 시작 → 54.2% 보임 → 91.7% 보임 → 100% 페이드 끝 */
+/* 슬라이드2: 0~47% off, 50~96% on */
 @keyframes hero-slide-2 {
-  0%       { opacity: 0; }
-  50%      { opacity: 0; }
-  62.5%    { opacity: 1; }
-  100%     { opacity: 1; }
+  0%,47%  { opacity: 0; }
+  52%     { opacity: 1; }
+  96%,100%{ opacity: 1; }
 }
-/* 슬라이드별 켄번스 패럴랙스 — 역동적 줌+좌우 패닝 (Y 고정으로 얼굴 보호) */
+/* kenburns-1: 넓게서 좁게 (청중 전경용 — 배경에서 강의자 쪽으로) */
 @keyframes kenburns-1 {
-  0%   { transform: scale(1.12) translateX(2%)    translateY(0); }
-  100% { transform: scale(1.0)  translateX(-1.5%) translateY(0); }
+  0%   { transform: scale(1.14) translate( 2.5%,  1.2%); }
+  100% { transform: scale(1.0)  translate(-1.5%, -0.5%); }
 }
+/* kenburns-2: 강의자 클로즈업용 — 좌하에서 우상으로 */
 @keyframes kenburns-2 {
-  0%   { transform: scale(1.0)  translateX(-2%)   translateY(0); }
-  100% { transform: scale(1.12) translateX(1.5%)  translateY(0); }
+  0%   { transform: scale(1.0)  translate(-2.5%, 0.8%); }
+  100% { transform: scale(1.14) translate( 2.0%, -0.8%); }
 }
 
 /* ── Hero 전체 컨테이너 ── */
 .hero {
   position: relative;
-  height: 82vh;
-  min-height: 600px;
-  max-height: 860px;
+  height: 88vh;
+  min-height: 620px;
+  max-height: 920px;
   display: flex;
   flex-direction: column;
   padding-top: var(--nav-h);
@@ -93,47 +92,58 @@
 .hero-slide img {
   width: 100%; height: 100%;
   object-fit: cover;
-  filter: brightness(0.88) contrast(1.06) saturate(1.04);
-  will-change: transform, opacity;
+  filter: brightness(0.84) contrast(1.08) saturate(1.06);
+  will-change: transform;
 }
 
-/* 슬라이드 1 — lecture-2 (강의자 우측, 핵심 강의 장면) */
+/* 슬라이드 1: 청중 전경 (넓은 앵글, 먼저 보임) */
 .hero-slide:nth-child(1) {
+  opacity: 1;
   animation: hero-slide-1 24s ease-in-out infinite;
 }
 .hero-slide:nth-child(1) img {
-  object-position: 68% 20%;
+  object-position: 72% 22%;
   animation: kenburns-1 24s ease-in-out infinite;
 }
 
-/* 슬라이드 2 — lecture-1 (청중+강의자 넓은 앵글) */
+/* 슬라이드 2: 강의자 제스처 클로즈업 */
 .hero-slide:nth-child(2) {
+  opacity: 0;
   animation: hero-slide-2 24s ease-in-out infinite;
 }
 .hero-slide:nth-child(2) img {
-  object-position: 60% 20%;
+  object-position: 76% 20%;
   animation: kenburns-2 24s ease-in-out infinite;
 }
 
-/* ── 오버레이: 왼쪽 강하게, 오른쪽 사진 살리기 ── */
+/* ── 멀티레이어 오버레이 ── */
 .hero-ov {
   position: absolute; inset: 0;
   z-index: 1;
   background:
-    linear-gradient(108deg,
-      rgba(6,16,32,.92) 0%,
-      rgba(6,16,32,.80) 30%,
-      rgba(6,16,32,.40) 56%,
-      rgba(6,16,32,.0) 100%
+    linear-gradient(105deg,
+      rgba(6,16,32,.94) 0%,
+      rgba(6,16,32,.82) 28%,
+      rgba(6,16,32,.38) 52%,
+      rgba(6,16,32,.0)  72%
     ),
     linear-gradient(to bottom,
-      rgba(6,16,32,.5) 0%,
-      transparent 22%
+      rgba(6,16,32,.55) 0%,
+      transparent 18%
     ),
     linear-gradient(to top,
-      rgba(6,16,32,.88) 0%,
-      transparent 32%
+      rgba(6,16,32,.90) 0%,
+      transparent 28%
     );
+  pointer-events: none;
+}
+.hero-ov::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg,
+    rgba(11,31,58,.06) 0%,
+    rgba(184,147,100,.03) 100%
+  );
   pointer-events: none;
 }
 
@@ -178,45 +188,63 @@
 .hero-img-accent { display: none; }
 .hero-line-accent {
   position: absolute; z-index: 2;
-  top: 0; right: 38%;
+  top: 0; right: 40%;
   width: 1px; height: 100%;
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(184,147,100,.42) 28%,
-    rgba(184,147,100,.72) 52%,
-    rgba(184,147,100,.25) 74%,
+    rgba(184,147,100,.35) 20%,
+    rgba(184,147,100,.7)  50%,
+    rgba(184,147,100,.28) 78%,
     transparent 100%
   );
   opacity: 0;
-  animation: fade-up-in 1.2s ease .8s forwards;
+  animation: fade-up-in 1.4s ease .6s forwards;
+}
+.hero-line-accent::after {
+  content: '';
+  position: absolute;
+  top: 25%; left: 18px;
+  width: 1px; height: 50%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(184,147,100,.22) 40%,
+    rgba(184,147,100,.22) 60%,
+    transparent
+  );
 }
 
 /* ── 우상단 전문성 배지 ── */
 .hero-badge {
   position: absolute; z-index: 4;
-  top: calc(var(--nav-h) + 32px);
-  right: clamp(24px, 4vw, 64px);
-  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+  top: calc(var(--nav-h) + 28px);
+  right: clamp(24px, 4vw, 60px);
+  display: flex; flex-direction: column; align-items: flex-end; gap: 7px;
   opacity: 0;
-  animation: fade-up-in .8s var(--ease-out-expo) 1.4s forwards;
+  animation: fade-up-in .9s var(--ease-out-expo) 1.2s forwards;
 }
 .hero-badge-item {
-  background: rgba(6,16,32,.72);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(184,147,100,.3);
-  border-radius: 3px;
-  padding: 8px 16px;
-  color: rgba(255,255,255,.85);
-  font-size: .72rem; font-weight: 700;
-  letter-spacing: .08em;
+  background: rgba(6,16,32,.68);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(184,147,100,.28);
+  border-radius: 2px;
+  padding: 7px 15px;
+  color: rgba(255,255,255,.82);
+  font-size: .7rem; font-weight: 700;
+  letter-spacing: .09em;
   white-space: nowrap;
+  transition: background .3s, border-color .3s;
+}
+.hero-badge-item:hover {
+  background: rgba(11,31,58,.88);
+  border-color: rgba(184,147,100,.55);
 }
 .hero-badge-item em {
   font-style: normal;
   color: var(--gold-l);
-  margin-right: 6px;
+  margin-right: 7px;
 }
 
 /* ──────────────────────────────────────
@@ -238,37 +266,36 @@
   box-sizing: border-box;
 }
 
-/* 텍스트 컬럼: 픽셀+vw 혼합으로 모든 브라우저 동일 렌더링 */
+/* 텍스트 컬럼 */
 .hero-text-box {
   width: 100%;
-  max-width: min(560px, 50vw);
+  max-width: min(580px, 52vw);
 }
 
 /* ── 태그 라인 ── */
 .hero-tag {
-  display: inline-flex; align-items: center; gap: 10px;
+  display: inline-flex; align-items: center; gap: 12px;
   color: var(--gold-l);
-  font-size: .72rem; font-weight: 700; letter-spacing: .2em;
+  font-size: .7rem; font-weight: 700; letter-spacing: .22em;
   text-transform: uppercase;
-  margin-bottom: 26px;
+  margin-bottom: 28px;
   opacity: 0;
-  animation: fade-up-in .7s var(--ease-out-expo) .2s forwards;
+  animation: fade-up-in .7s var(--ease-out-expo) .15s forwards;
 }
 .hero-tag::before {
   content: '';
-  display: inline-block; width: 28px; height: 1px;
-  background: var(--gold-l);
-  flex-shrink: 0;
+  display: inline-block; width: 32px; height: 1px;
+  background: var(--gold-l); flex-shrink: 0;
 }
 
 /* ── 메인 타이틀 ── */
 .hero-title {
-  font-size: clamp(2.5rem, 4.0vw, 4.2rem);
-  font-weight: 800; /* 나눔고딕 최대 800 */
+  font-size: clamp(2.6rem, 4.2vw, 4.6rem);
+  font-weight: 800;
   color: #fff;
-  line-height: 1.18;
+  line-height: 1.16;
   letter-spacing: -.03em;
-  margin-bottom: 22px;
+  margin-bottom: 24px;
   word-break: keep-all;
 }
 .hero-title em { font-style: normal; color: var(--gold-l); }
@@ -277,23 +304,23 @@
 }
 .hero-title-line span {
   display: block;
-  opacity: 0; transform: translateY(105%);
+  opacity: 0; transform: translateY(108%);
 }
-.hero-title-line:nth-child(1) span { animation: slide-up .8s var(--ease-out-expo) .35s forwards; }
-.hero-title-line:nth-child(2) span { animation: slide-up .8s var(--ease-out-expo) .52s forwards; }
-.hero-title-line:nth-child(3) span { animation: slide-up .8s var(--ease-out-expo) .69s forwards; }
+.hero-title-line:nth-child(1) span { animation: slide-up .75s var(--ease-out-expo) .28s forwards; }
+.hero-title-line:nth-child(2) span { animation: slide-up .75s var(--ease-out-expo) .44s forwards; }
+.hero-title-line:nth-child(3) span { animation: slide-up .75s var(--ease-out-expo) .60s forwards; }
 
 /* ── 설명 텍스트 ── */
 .hero-desc {
-  font-size: .95rem;
-  color: rgba(255,255,255,.65);
-  line-height: 1.92;
-  margin-bottom: 34px;
+  font-size: .93rem;
+  color: rgba(255,255,255,.6);
+  line-height: 1.95;
+  margin-bottom: 36px;
   word-break: keep-all;
   opacity: 0;
-  animation: fade-up-in .7s var(--ease-out-expo) .9s forwards;
+  animation: fade-up-in .7s var(--ease-out-expo) .82s forwards;
 }
-.hero-desc strong { color: rgba(255,255,255,.92); font-weight: 700; }
+.hero-desc strong { color: rgba(255,255,255,.9); font-weight: 700; }
 
 /* ── 크레딧 ── */
 .hero-photo-credit {
@@ -309,42 +336,44 @@
 
 /* ── 버튼 그룹 ── */
 .hero-btns {
-  display: flex; gap: 12px; flex-wrap: wrap;
+  display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
   opacity: 0;
-  animation: fade-up-in .7s var(--ease-out-expo) 1.05s forwards;
+  animation: fade-up-in .7s var(--ease-out-expo) 1.0s forwards;
 }
 
 /* ── Hero 하단 수치 바 ── */
 .hero-stats {
   position: relative; z-index: 3;
   flex-shrink: 0;
-  border-top: 1px solid rgba(184,147,100,.2);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  background: rgba(6,16,32,.76);
+  border-top: 1px solid rgba(184,147,100,.22);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(5,14,28,.8);
 }
 .hero-stats-inner {
   max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px);
   display: flex;
 }
 .hero-stat {
-  flex: 1; padding: 20px 0;
-  border-right: 1px solid rgba(255,255,255,.08);
+  flex: 1; padding: 22px 0;
+  border-right: 1px solid rgba(255,255,255,.07);
   text-align: center;
   opacity: 0;
-  animation: fade-up-in .65s var(--ease-out-expo) 1.25s forwards;
+  animation: fade-up-in .65s var(--ease-out-expo) 1.15s forwards;
+  transition: background .3s;
 }
 .hero-stat:last-child { border-right: none; }
+.hero-stat:hover { background: rgba(184,147,100,.06); }
 .hero-stat-num {
-  font-size: 1.68rem; font-weight: 800;
+  font-size: 1.72rem; font-weight: 800;
   color: #fff;
   letter-spacing: -.03em; line-height: 1;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
-.hero-stat-num sup { font-size: .82rem; color: var(--gold-l); vertical-align: super; }
+.hero-stat-num sup { font-size: .8rem; color: var(--gold-l); vertical-align: super; }
 .hero-stat-lbl {
-  font-size: .67rem; color: rgba(255,255,255,.42);
-  letter-spacing: .05em; font-weight: 600;
+  font-size: .66rem; color: rgba(255,255,255,.4);
+  letter-spacing: .06em; font-weight: 600;
   word-break: keep-all;
 }
 
@@ -956,30 +985,29 @@
 ══════════════════════════════════════ -->
 <section class="hero" id="hero">
 
-  <!-- 배경: 두 장 강의 사진 크로스페이드 슬라이드쇼 -->
+  <!-- 배경: 두 장 강의 사진 크로스페이드 -->
   <div class="hero-bg">
-    <!-- 슬라이드 1: lecture-2 (강의자 우측 클로즈업) -->
+    <!-- 슬라이드 1: 청중 전경 (넓은 앵글) — 먼저 보임 -->
     <div class="hero-slide">
-      <img src="img/hero-bg.jpg?v=3"
-           alt="안경사 조성인 — 대전보건대학교 특강 강의 장면"
+      <img src="img/hero-bg.jpg?v=4"
+           alt="안경사 조성인 — 대전보건대학교 특강 강의 전경"
            loading="eager" fetchpriority="high"/>
     </div>
-    <!-- 슬라이드 2: lecture-1 (강의실 전경 + 청중) -->
+    <!-- 슬라이드 2: 강의자 제스처 클로즈업 -->
     <div class="hero-slide">
-      <img src="img/hero-bg2.jpg?v=3"
-           alt="안경사 조성인 — 주변부 왜곡 강의 전경"
+      <img src="img/hero-bg2.jpg?v=4"
+           alt="안경사 조성인 — 주변부 왜곡 강의 장면"
            loading="eager"/>
     </div>
-    <!-- 공용 오버레이 -->
     <div class="hero-ov"></div>
   </div>
 
-  <!-- 사진-텍스트 경계 골드 라인 -->
+  <!-- 텍스트-사진 경계 골드 라인 -->
   <div class="hero-line-accent"></div>
 
   <!-- 우상단 전문성 배지 -->
   <div class="hero-badge">
-    <div class="hero-badge-item"><em>✦</em>보건대학교 특강 교수</div>
+    <div class="hero-badge-item"><em>✦</em>대전보건대학교 특강 교수</div>
     <div class="hero-badge-item"><em>✦</em>옵토메트리스트 3기</div>
     <div class="hero-badge-item"><em>✦</em>피팅 마스터 수료</div>
   </div>
