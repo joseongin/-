@@ -52,14 +52,14 @@
   62.5%    { opacity: 1; }
   100%     { opacity: 1; }
 }
-/* 슬라이드별 켄번스 패럴랙스 — 더 역동적인 줌+팬 */
+/* 슬라이드별 켄번스 패럴랙스 — 역동적 줌+좌우 패닝 (Y 고정으로 얼굴 보호) */
 @keyframes kenburns-1 {
-  0%   { transform: scale(1.12) translateX(2%)   translateY(1%); }
-  100% { transform: scale(1.0)  translateX(-1.5%) translateY(-0.5%); }
+  0%   { transform: scale(1.12) translateX(2%)    translateY(0); }
+  100% { transform: scale(1.0)  translateX(-1.5%) translateY(0); }
 }
 @keyframes kenburns-2 {
-  0%   { transform: scale(1.0)  translateX(-2%)  translateY(-1%); }
-  100% { transform: scale(1.12) translateX(1.5%) translateY(0.5%); }
+  0%   { transform: scale(1.0)  translateX(-2%)   translateY(0); }
+  100% { transform: scale(1.12) translateX(1.5%)  translateY(0); }
 }
 
 /* ── Hero 전체 컨테이너 ── */
@@ -99,7 +99,7 @@
   animation: hero-slide-1 24s ease-in-out infinite;
 }
 .hero-slide:nth-child(1) img {
-  object-position: 68% center;
+  object-position: 68% 20%;
   animation: kenburns-1 24s ease-in-out infinite;
 }
 
@@ -108,7 +108,7 @@
   animation: hero-slide-2 24s ease-in-out infinite;
 }
 .hero-slide:nth-child(2) img {
-  object-position: 60% center;
+  object-position: 60% 20%;
   animation: kenburns-2 24s ease-in-out infinite;
 }
 
@@ -887,9 +887,9 @@
     height: auto;
     min-height: 100svh;
   }
-  /* 강의자 모바일 프레이밍 */
-  .hero-slide:nth-child(1) img { object-position: 72% center; }
-  .hero-slide:nth-child(2) img { object-position: 55% center; }
+  /* 강의자 모바일 프레이밍 — 상단 20% 유지로 얼굴 보이도록 */
+  .hero-slide:nth-child(1) img { object-position: 72% 20%; }
+  .hero-slide:nth-child(2) img { object-position: 55% 20%; }
   .hero-slide-dots { display: none; }
   .hero-body {
     padding-top: 28px;
