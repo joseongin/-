@@ -53,15 +53,15 @@
   58%     { opacity: 1; }
   96%,100%{ opacity: 1; }
 }
-/* kenburns-1: 강연자 얼굴 고정 — 우측 고정 + 매우 미세한 줌·드리프트 */
+/* kenburns-1: scale 제거 — translate pan만 (글씨 깨짐 완전 방지) */
 @keyframes kenburns-1 {
-  0%   { transform: scale(1.0)  translate(0%,    0%); }
-  100% { transform: scale(1.05) translate(-0.8%, -0.4%); }
+  0%   { transform: translate(0%,    0%); }
+  100% { transform: translate(-0.6%, -0.3%); }
 }
-/* kenburns-2: 강연자 B — 미세 줌아웃 + 살짝 우상 드리프트 */
+/* kenburns-2: scale 제거 — translate pan만 */
 @keyframes kenburns-2 {
-  0%   { transform: scale(1.05) translate(-0.4%, -0.6%); }
-  100% { transform: scale(1.0)  translate( 0.4%,  0.2%); }
+  0%   { transform: translate(0.3%,  0%); }
+  100% { transform: translate(-0.3%, -0.3%); }
 }
 
 /* ── Hero 전체 컨테이너 ── */
@@ -103,8 +103,8 @@
   animation: hero-slide-1 26s ease-in-out infinite;
 }
 .hero-slide:nth-child(1) img {
-  /* 크롭이 이미 우측 기준 → 중앙 정렬로 얼굴 노출 */
-  object-position: 55% 25%;
+  /* 얼굴 실제 위치 x=37% y=38% 기준 */
+  object-position: 37% 38%;
   animation: kenburns-1 26s ease-in-out infinite;
 }
 
@@ -114,8 +114,8 @@
   animation: hero-slide-2 26s ease-in-out infinite;
 }
 .hero-slide:nth-child(2) img {
-  /* 강연자 중앙, 청중 전경 */
-  object-position: 55% 20%;
+  /* 얼굴 실제 위치 x=32% y=35% 기준 */
+  object-position: 32% 35%;
   animation: kenburns-2 26s ease-in-out infinite;
 }
 
@@ -944,8 +944,8 @@
     min-height: 100svh;
   }
   /* 강의자 모바일 프레이밍 — 상단 18% 유지로 얼굴 보이도록 */
-  .hero-slide:nth-child(1) img { object-position: 55% 20%; }
-  .hero-slide:nth-child(2) img { object-position: 55% 18%; }
+  .hero-slide:nth-child(1) img { object-position: 37% 38%; }
+  .hero-slide:nth-child(2) img { object-position: 32% 35%; }
   .hero-slide-dots { display: none; }
   .hero-body {
     padding-top: 28px;
@@ -1000,13 +1000,13 @@
   <div class="hero-bg">
     <!-- 슬라이드 1: 청중 전경 (넓은 앵글) — 먼저 보임 -->
     <div class="hero-slide">
-      <img src="img/hero-bg.jpg?v=7"
+      <img src="img/hero-bg.jpg?v=8"
            alt="안경사 조성인 — 대전보건대학교 특강 강의 전경"
            loading="eager" fetchpriority="high"/>
     </div>
     <!-- 슬라이드 2: 강의자 제스처 클로즈업 -->
     <div class="hero-slide">
-      <img src="img/hero-bg2.jpg?v=7"
+      <img src="img/hero-bg2.jpg?v=8"
            alt="안경사 조성인 — 주변부 왜곡 강의 장면"
            loading="eager"/>
     </div>
