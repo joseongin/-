@@ -40,28 +40,32 @@
   50%      { opacity: 1;  transform: scale(1.012); }
 }
 
-/* ── 슬라이드쇼 크로스페이드 + kenburns (26s 루프) ── */
-/* 슬라이드1: 0~44% on → 천천히 페이드아웃 */
+/* ── 슬라이드쇼 크로스페이드 (22s 루프) ── */
 @keyframes hero-slide-1 {
-  0%, 42% { opacity: 1; }
-  54%     { opacity: 0; }
+  0%, 40% { opacity: 1; }
+  52%     { opacity: 0; }
   96%,100%{ opacity: 0; }
 }
-/* 슬라이드2: 50% 페이드인 → 96% 유지 */
 @keyframes hero-slide-2 {
-  0%, 50% { opacity: 0; }
-  58%     { opacity: 1; }
+  0%, 48% { opacity: 0; }
+  56%     { opacity: 1; }
   96%,100%{ opacity: 1; }
 }
-/* kenburns-1: scale 제거 — translate pan만 (글씨 깨짐 완전 방지) */
-@keyframes kenburns-1 {
-  0%   { transform: translate(0%,    0%); }
-  100% { transform: translate(-0.6%, -0.3%); }
+/* ── 감각적 Parallax Pan (scale 없음, 글씨 깨짐 방지) ── */
+@keyframes kpan-1 {
+  0%   { transform: translate(0%,    0%)    scale(1.0); }
+  50%  { transform: translate(-0.8%, -0.5%) scale(1.0); }
+  100% { transform: translate(-1.2%, -0.2%) scale(1.0); }
 }
-/* kenburns-2: scale 제거 — translate pan만 */
-@keyframes kenburns-2 {
-  0%   { transform: translate(0.3%,  0%); }
-  100% { transform: translate(-0.3%, -0.3%); }
+@keyframes kpan-2 {
+  0%   { transform: translate(1.0%,  0.3%)  scale(1.0); }
+  50%  { transform: translate(0.2%, -0.3%)  scale(1.0); }
+  100% { transform: translate(-0.5%, 0.1%)  scale(1.0); }
+}
+/* ── 우측 이미지 밝기 펄스 (강연자 존재감 강조) ── */
+@keyframes img-pulse {
+  0%, 100% { filter: brightness(0.80) contrast(1.10) saturate(1.08); }
+  50%      { filter: brightness(0.86) contrast(1.08) saturate(1.12); }
 }
 
 /* ── Hero 전체 컨테이너 ── */
@@ -92,31 +96,31 @@
 .hero-slide img {
   width: 100%; height: 100%;
   object-fit: cover;
-  /* 밝기 낮추되 대비·채도는 살려 선명하게 */
-  filter: brightness(0.78) contrast(1.09) saturate(1.07);
+  filter: brightness(0.80) contrast(1.10) saturate(1.08);
   will-change: transform;
+  animation: img-pulse 8s ease-in-out infinite;
 }
 
-/* 슬라이드 1: 강연자 A — 얼굴이 오른쪽에 위치한 크롭 이미지 */
+/* 슬라이드 1: 강연자 A — 오른쪽 배치 */
 .hero-slide:nth-child(1) {
   opacity: 1;
-  animation: hero-slide-1 26s ease-in-out infinite;
+  animation: hero-slide-1 22s cubic-bezier(.4,0,.2,1) infinite;
 }
 .hero-slide:nth-child(1) img {
-  /* 얼굴 실제 위치 x=37% y=38% 기준 */
-  object-position: 37% 38%;
-  animation: kenburns-1 26s ease-in-out infinite;
+  /* 강연자 x=60%, 얼굴 y=45% */
+  object-position: 60% 40%;
+  animation: kpan-1 22s ease-in-out infinite, img-pulse 8s ease-in-out infinite;
 }
 
-/* 슬라이드 2: 강연자 B (정면 — 중앙 구도) */
+/* 슬라이드 2: 강연자 B — flip으로 오른쪽 배치 */
 .hero-slide:nth-child(2) {
   opacity: 0;
-  animation: hero-slide-2 26s ease-in-out infinite;
+  animation: hero-slide-2 22s cubic-bezier(.4,0,.2,1) infinite;
 }
 .hero-slide:nth-child(2) img {
-  /* 얼굴 실제 위치 x=32% y=35% 기준 */
-  object-position: 32% 35%;
-  animation: kenburns-2 26s ease-in-out infinite;
+  /* flip 후 강연자 x=77%, y=38% */
+  object-position: 77% 38%;
+  animation: kpan-2 22s ease-in-out infinite, img-pulse 8s ease-in-out 4s infinite;
 }
 
 /* ── 멀티레이어 오버레이 ── */
@@ -944,8 +948,8 @@
     min-height: 100svh;
   }
   /* 강의자 모바일 프레이밍 — 상단 18% 유지로 얼굴 보이도록 */
-  .hero-slide:nth-child(1) img { object-position: 37% 38%; }
-  .hero-slide:nth-child(2) img { object-position: 32% 35%; }
+  .hero-slide:nth-child(1) img { object-position: 60% 35%; }
+  .hero-slide:nth-child(2) img { object-position: 77% 35%; }
   .hero-slide-dots { display: none; }
   .hero-body {
     padding-top: 28px;
@@ -1000,13 +1004,13 @@
   <div class="hero-bg">
     <!-- 슬라이드 1: 청중 전경 (넓은 앵글) — 먼저 보임 -->
     <div class="hero-slide">
-      <img src="img/hero-bg.jpg?v=8"
+      <img src="img/hero-bg.jpg?v=9"
            alt="안경사 조성인 — 대전보건대학교 특강 강의 전경"
            loading="eager" fetchpriority="high"/>
     </div>
     <!-- 슬라이드 2: 강의자 제스처 클로즈업 -->
     <div class="hero-slide">
-      <img src="img/hero-bg2.jpg?v=8"
+      <img src="img/hero-bg2.jpg?v=9"
            alt="안경사 조성인 — 주변부 왜곡 강의 장면"
            loading="eager"/>
     </div>
@@ -1031,8 +1035,8 @@
 
   <!-- 슬라이드 진행 도트 -->
   <div class="hero-slide-dots" id="heroDots">
-    <div class="hero-slide-dot active" style="--dot-dur:13s"></div>
-    <div class="hero-slide-dot"        style="--dot-dur:13s"></div>
+    <div class="hero-slide-dot active" style="--dot-dur:11s"></div>
+    <div class="hero-slide-dot"        style="--dot-dur:11s"></div>
   </div>
 
   <!-- 사진 크레딧 -->
@@ -1232,7 +1236,7 @@
   <div class="zeiss-band-inner">
     <!-- 좌: 이미지 -->
     <div class="zeiss-band-img sr sr-left">
-      <img src="img/zeiss-device.jpg" alt="ZEISS i.Profiler® plus"/>
+      <img src="img/zeiss-device-new.jpg?v=1" alt="ZEISS i.Profiler® plus"/>
       <span class="zeiss-band-badge">ZEISS · Flagship</span>
     </div>
     <!-- 우: 텍스트 -->
@@ -1296,7 +1300,7 @@
       <!-- Card 2 -->
       <div class="why-card sr d1">
         <div class="why-card-img">
-          <img src="img/why-fitting.jpg?v=2" alt="ZEISS i.Profiler 정밀 검안 장비"/>
+          <img src="img/why-binocular.jpg?v=1" alt="각막지형도 측정 — 도수가 아닌 적응 설계"/>
           <div class="why-card-img-ov"></div>
         </div>
         <div class="why-card-body">
