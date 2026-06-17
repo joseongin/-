@@ -18,14 +18,10 @@
 }
 
 /* ══════════════════════════════════════
-   HERO — Fullscreen Cinematic (크로스브라우저 안정화)
+   HERO — Cinematic Slideshow (두 사진 교대 재생)
 ══════════════════════════════════════ */
 
-/* ── 애니메이션 키프레임 ── */
-@keyframes hero-parallax {
-  from { transform: scale(1.06) translateX(0); }
-  to   { transform: scale(1.0)  translateX(-1.5%); }
-}
+/* ── 전역 키프레임 ── */
 @keyframes slide-up {
   to { opacity: 1; transform: translateY(0); }
 }
@@ -41,6 +37,31 @@
   50%      { opacity: 1;  transform: scale(1.012); }
 }
 
+/* ── 슬라이드쇼 크로스페이드 (12s on / 2s fade / 2s off × 2장 = 24s 루프) ── */
+/* 슬라이드 1: 0% 보임 → 87.5% 보임 → 91.7% 페이드 → 100% 숨김 */
+@keyframes hero-slide-1 {
+  0%       { opacity: 1; }
+  79%      { opacity: 1; }
+  91.7%    { opacity: 0; }
+  100%     { opacity: 0; }
+}
+/* 슬라이드 2: 0% 숨김 → 50% 등장 시작 → 54.2% 보임 → 91.7% 보임 → 100% 페이드 끝 */
+@keyframes hero-slide-2 {
+  0%       { opacity: 0; }
+  50%      { opacity: 0; }
+  62.5%    { opacity: 1; }
+  100%     { opacity: 1; }
+}
+/* 슬라이드별 켄번스 패럴랙스 */
+@keyframes kenburns-1 {
+  0%   { transform: scale(1.08) translateX(0)    translateY(0); }
+  100% { transform: scale(1.0)  translateX(-1.2%) translateY(-.4%); }
+}
+@keyframes kenburns-2 {
+  0%   { transform: scale(1.0)  translateX(1.2%)  translateY(.4%); }
+  100% { transform: scale(1.08) translateX(0)     translateY(0); }
+}
+
 /* ── Hero 전체 컨테이너 ── */
 .hero {
   position: relative;
@@ -52,55 +73,115 @@
   overflow: hidden;
 }
 
-/* ── 배경 이미지 ── */
+/* ── 배경 슬라이드 래퍼 ── */
 .hero-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
 }
-.hero-bg img {
+
+/* 각 슬라이드 레이어 */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.hero-slide img {
   width: 100%; height: 100%;
   object-fit: cover;
-  /* 강의자(우측 인물) 프레이밍: 오른쪽 2/3 중앙 */
-  object-position: 70% center;
-  transform: scale(1.06);
-  animation: hero-parallax 22s ease-in-out infinite alternate;
-  filter: brightness(0.9) contrast(1.04);
+  filter: brightness(0.88) contrast(1.06) saturate(1.04);
+  will-change: transform, opacity;
 }
 
-/* ── 오버레이: 왼쪽 강하게(텍스트 가독성), 오른쪽 사진 살리기 ── */
+/* 슬라이드 1 — lecture-2 (강의자 우측, 핵심 강의 장면) */
+.hero-slide:nth-child(1) {
+  animation: hero-slide-1 24s ease-in-out infinite;
+}
+.hero-slide:nth-child(1) img {
+  object-position: 68% center;
+  animation: kenburns-1 24s ease-in-out infinite;
+}
+
+/* 슬라이드 2 — lecture-1 (청중+강의자 넓은 앵글) */
+.hero-slide:nth-child(2) {
+  animation: hero-slide-2 24s ease-in-out infinite;
+}
+.hero-slide:nth-child(2) img {
+  object-position: 60% center;
+  animation: kenburns-2 24s ease-in-out infinite;
+}
+
+/* ── 오버레이: 왼쪽 강하게, 오른쪽 사진 살리기 ── */
 .hero-ov {
   position: absolute; inset: 0;
+  z-index: 1;
   background:
-    linear-gradient(105deg,
-      rgba(6,16,32,.95) 0%,
-      rgba(6,16,32,.85) 35%,
-      rgba(6,16,32,.48) 58%,
-      rgba(6,16,32,.06) 100%
+    linear-gradient(108deg,
+      rgba(6,16,32,.96) 0%,
+      rgba(6,16,32,.86) 32%,
+      rgba(6,16,32,.50) 55%,
+      rgba(6,16,32,.05) 100%
     ),
     linear-gradient(to bottom,
-      rgba(6,16,32,.52) 0%,
-      transparent 26%
+      rgba(6,16,32,.54) 0%,
+      transparent 25%
     ),
     linear-gradient(to top,
-      rgba(6,16,32,.90) 0%,
-      transparent 38%
+      rgba(6,16,32,.92) 0%,
+      transparent 36%
     );
+  pointer-events: none;
 }
 
-/* ── 우측 accent: 사진 영역 경계 골드 라인 ── */
-.hero-img-accent { display: none; }
+/* ── 슬라이드 진행 도트 ── */
+.hero-slide-dots {
+  position: absolute; z-index: 4;
+  bottom: calc(72px + 52px);
+  left: var(--px);
+  display: flex; gap: 8px;
+  opacity: 0;
+  animation: fade-up-in .5s ease 1.8s forwards;
+}
+.hero-slide-dot {
+  width: 20px; height: 2px;
+  background: rgba(255,255,255,.25);
+  border-radius: 1px;
+  transition: background .4s, width .4s;
+  overflow: hidden;
+  position: relative;
+}
+/* 활성 도트: 진행 바 */
+.hero-slide-dot::after {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  height: 100%; width: 0;
+  background: var(--gold-l);
+  border-radius: 1px;
+}
+.hero-slide-dot.active {
+  width: 36px;
+  background: rgba(255,255,255,.15);
+}
+.hero-slide-dot.active::after {
+  animation: dot-progress var(--dot-dur, 12s) linear forwards;
+}
+@keyframes dot-progress {
+  from { width: 0; }
+  to   { width: 100%; }
+}
 
+/* ── 사진 영역 경계 골드 라인 ── */
+.hero-img-accent { display: none; }
 .hero-line-accent {
-  position: absolute; z-index: 1;
+  position: absolute; z-index: 2;
   top: 0; right: 38%;
   width: 1px; height: 100%;
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(184,147,100,.45) 28%,
-    rgba(184,147,100,.75) 52%,
-    rgba(184,147,100,.28) 74%,
+    rgba(184,147,100,.42) 28%,
+    rgba(184,147,100,.72) 52%,
+    rgba(184,147,100,.25) 74%,
     transparent 100%
   );
   opacity: 0;
@@ -109,7 +190,7 @@
 
 /* ── 우상단 전문성 배지 ── */
 .hero-badge {
-  position: absolute; z-index: 3;
+  position: absolute; z-index: 4;
   top: calc(var(--nav-h) + 32px);
   right: clamp(24px, 4vw, 64px);
   display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
@@ -119,6 +200,7 @@
 .hero-badge-item {
   background: rgba(6,16,32,.72);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(184,147,100,.3);
   border-radius: 3px;
   padding: 8px 16px;
@@ -135,16 +217,13 @@
 
 /* ──────────────────────────────────────
    hero-body: 크로스브라우저 안정 레이아웃
-   ❌ padding-right:52% (viewport 기준 % 계산 → 브라우저마다 다름)
-   ✅ hero-text-box max-width 고정으로 교체
 ────────────────────────────────────── */
 .hero-body {
-  position: relative; z-index: 2;
+  position: relative; z-index: 3;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  /* hero-stats-inner와 동일한 중앙 정렬 컨테이너 */
   max-width: var(--max-w);
   width: 100%;
   margin: 0 auto;
@@ -155,32 +234,38 @@
   box-sizing: border-box;
 }
 
-/* 텍스트 콘텐츠 박스: 고정 max-width로 우측 사진 공간 확보
-   min()로 560px 또는 창 너비의 절반 중 작은 값 사용 → 모든 브라우저 동일 */
+/* 텍스트 컬럼: 픽셀+vw 혼합으로 모든 브라우저 동일 렌더링 */
 .hero-text-box {
   width: 100%;
   max-width: min(560px, 50vw);
 }
 
+/* ── 태그 라인 ── */
 .hero-tag {
   display: inline-flex; align-items: center; gap: 10px;
   color: var(--gold-l);
   font-size: .72rem; font-weight: 700; letter-spacing: .2em;
   text-transform: uppercase;
-  margin-bottom: 28px;
+  margin-bottom: 26px;
   opacity: 0;
   animation: fade-up-in .7s var(--ease-out-expo) .2s forwards;
 }
 .hero-tag::before {
   content: '';
-  display: inline-block; width: 32px; height: 1px;
+  display: inline-block; width: 28px; height: 1px;
   background: var(--gold-l);
+  flex-shrink: 0;
 }
+
+/* ── 메인 타이틀 ── */
 .hero-title {
-  font-size: clamp(2.6rem, 4.2vw, 4.4rem);
-  font-weight: 900; color: #fff;
-  line-height: 1.14; letter-spacing: -.04em;
-  margin-bottom: 24px; word-break: keep-all;
+  font-size: clamp(2.5rem, 4.0vw, 4.2rem);
+  font-weight: 800; /* 나눔고딕 최대 800 */
+  color: #fff;
+  line-height: 1.18;
+  letter-spacing: -.03em;
+  margin-bottom: 22px;
+  word-break: keep-all;
 }
 .hero-title em { font-style: normal; color: var(--gold-l); }
 .hero-title-line {
@@ -188,46 +273,51 @@
 }
 .hero-title-line span {
   display: block;
-  opacity: 0; transform: translateY(100%);
+  opacity: 0; transform: translateY(105%);
 }
-.hero-title-line:nth-child(1) span { animation: slide-up .75s var(--ease-out-expo) .35s forwards; }
-.hero-title-line:nth-child(2) span { animation: slide-up .75s var(--ease-out-expo) .5s forwards; }
-.hero-title-line:nth-child(3) span { animation: slide-up .75s var(--ease-out-expo) .65s forwards; }
+.hero-title-line:nth-child(1) span { animation: slide-up .8s var(--ease-out-expo) .35s forwards; }
+.hero-title-line:nth-child(2) span { animation: slide-up .8s var(--ease-out-expo) .52s forwards; }
+.hero-title-line:nth-child(3) span { animation: slide-up .8s var(--ease-out-expo) .69s forwards; }
 
+/* ── 설명 텍스트 ── */
 .hero-desc {
-  font-size: .96rem; color: rgba(255,255,255,.68);
-  line-height: 1.9; margin-bottom: 36px;
+  font-size: .95rem;
+  color: rgba(255,255,255,.65);
+  line-height: 1.92;
+  margin-bottom: 34px;
   word-break: keep-all;
   opacity: 0;
-  animation: fade-up-in .7s var(--ease-out-expo) .85s forwards;
+  animation: fade-up-in .7s var(--ease-out-expo) .9s forwards;
 }
-.hero-desc strong { color: rgba(255,255,255,.95); font-weight: 700; }
+.hero-desc strong { color: rgba(255,255,255,.92); font-weight: 700; }
 
-/* ── 강의자 이름 크레딧 ── */
+/* ── 크레딧 ── */
 .hero-photo-credit {
-  position: absolute; z-index: 3;
+  position: absolute; z-index: 4;
   bottom: calc(72px + 20px);
   right: clamp(24px, 4vw, 64px);
-  color: rgba(255,255,255,.38);
+  color: rgba(255,255,255,.36);
   font-size: .65rem; font-weight: 700;
   letter-spacing: .14em; text-transform: uppercase;
   opacity: 0;
-  animation: fade-up-in .6s ease 1.6s forwards;
+  animation: fade-up-in .6s ease 1.8s forwards;
 }
 
+/* ── 버튼 그룹 ── */
 .hero-btns {
-  display: flex; gap: 14px; flex-wrap: wrap;
+  display: flex; gap: 12px; flex-wrap: wrap;
   opacity: 0;
-  animation: fade-up-in .7s var(--ease-out-expo) 1s forwards;
+  animation: fade-up-in .7s var(--ease-out-expo) 1.05s forwards;
 }
 
 /* ── Hero 하단 수치 바 ── */
 .hero-stats {
-  position: relative; z-index: 2;
+  position: relative; z-index: 3;
   flex-shrink: 0;
   border-top: 1px solid rgba(184,147,100,.2);
-  backdrop-filter: blur(16px);
-  background: rgba(6,16,32,.75);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  background: rgba(6,16,32,.76);
 }
 .hero-stats-inner {
   max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px);
@@ -235,41 +325,43 @@
 }
 .hero-stat {
   flex: 1; padding: 20px 0;
-  border-right: 1px solid rgba(255,255,255,.1);
+  border-right: 1px solid rgba(255,255,255,.08);
   text-align: center;
   opacity: 0;
-  animation: fade-up-in .6s var(--ease-out-expo) 1.2s forwards;
+  animation: fade-up-in .65s var(--ease-out-expo) 1.25s forwards;
 }
 .hero-stat:last-child { border-right: none; }
 .hero-stat-num {
-  font-size: 1.7rem; font-weight: 900; color: #fff;
-  letter-spacing: -.05em; line-height: 1;
+  font-size: 1.68rem; font-weight: 800;
+  color: #fff;
+  letter-spacing: -.03em; line-height: 1;
   margin-bottom: 5px;
 }
-.hero-stat-num sup { font-size: .85rem; color: var(--gold-l); }
+.hero-stat-num sup { font-size: .82rem; color: var(--gold-l); vertical-align: super; }
 .hero-stat-lbl {
-  font-size: .68rem; color: rgba(255,255,255,.45);
-  letter-spacing: .06em; font-weight: 600;
+  font-size: .67rem; color: rgba(255,255,255,.42);
+  letter-spacing: .05em; font-weight: 600;
+  word-break: keep-all;
 }
 
 /* ── 스크롤 인디케이터 ── */
 .hero-scroll {
   position: absolute;
   right: 3vw;
-  bottom: calc(72px + 40px); /* stats 높이 위 */
-  z-index: 3;
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  bottom: calc(72px + 44px);
+  z-index: 4;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
   opacity: 0;
-  animation: fade-up-in .5s var(--ease-out-expo) 1.5s forwards;
+  animation: fade-up-in .5s var(--ease-out-expo) 1.6s forwards;
 }
 .hero-scroll-text {
-  font-size: .6rem; letter-spacing: .18em; color: rgba(255,255,255,.3);
+  font-size: .58rem; letter-spacing: .18em; color: rgba(255,255,255,.28);
   writing-mode: vertical-rl; text-orientation: mixed;
 }
 .hero-scroll-line {
-  width: 1px; height: 60px;
-  background: linear-gradient(to bottom, rgba(184,147,100,.7), transparent);
-  animation: scroll-pulse 2.2s ease-in-out infinite;
+  width: 1px; height: 56px;
+  background: linear-gradient(to bottom, rgba(184,147,100,.65), transparent);
+  animation: scroll-pulse 2.4s ease-in-out infinite;
 }
 
 /* ══════════════════════════════════════
@@ -428,8 +520,8 @@
 }
 .zeiss-band-content h2 {
   font-size: clamp(1.8rem, 3vw, 2.8rem);
-  font-weight: 900; line-height: 1.22;
-  letter-spacing: -.042em; margin-bottom: 22px;
+  font-weight: 800; line-height: 1.22;
+  letter-spacing: -.036em; margin-bottom: 22px;
   word-break: keep-all;
 }
 .zeiss-band-content p {
@@ -448,8 +540,8 @@
 }
 .zeiss-spec:hover { background: rgba(184,147,100,.12); border-color: rgba(184,147,100,.3); }
 .zeiss-spec-val {
-  font-size: 1.3rem; font-weight: 900; color: #fff;
-  letter-spacing: -.04em; line-height: 1;
+  font-size: 1.3rem; font-weight: 800; color: #fff;
+  letter-spacing: -.03em; line-height: 1;
   margin-bottom: 6px;
 }
 .zeiss-spec-lbl {
@@ -681,8 +773,8 @@
 .cta-sec .wrap { position: relative; z-index: 1; }
 .cta-sec h2 {
   font-size: clamp(2rem, 3.5vw, 3rem);
-  font-weight: 900; color: #fff;
-  letter-spacing: -.04em; margin-bottom: 18px; word-break: keep-all;
+  font-weight: 800; color: #fff;
+  letter-spacing: -.032em; margin-bottom: 18px; word-break: keep-all;
 }
 .cta-sec p {
   font-size: 1.05rem; color: rgba(255,255,255,.55);
@@ -753,6 +845,7 @@
     max-width: 100%;
   }
   .hero-scroll { display: none; }
+  .hero-slide-dots { left: var(--px); bottom: calc(72px + 40px); }
   .hero-title { font-size: clamp(2.2rem, 6vw, 3rem); }
   .hero-tag { margin-bottom: 20px; }
   .hero-desc { font-size: .95rem; margin-bottom: 32px; }
@@ -782,7 +875,9 @@
     min-height: 100svh;
   }
   /* 강의자 모바일 프레이밍 */
-  .hero-bg img { object-position: 75% center; }
+  .hero-slide:nth-child(1) img { object-position: 72% center; }
+  .hero-slide:nth-child(2) img { object-position: 55% center; }
+  .hero-slide-dots { display: none; }
   .hero-body {
     padding-top: 28px;
     padding-bottom: 28px;
@@ -828,20 +923,32 @@
 <div id="ticker-slot"></div>
 
 <!-- ══════════════════════════════════════
-     HERO
+     HERO — Cinematic Slideshow
 ══════════════════════════════════════ -->
-<section class="hero">
+<section class="hero" id="hero">
 
-  <!-- 배경: 조성인 원장 강의 사진 -->
+  <!-- 배경: 두 장 강의 사진 크로스페이드 슬라이드쇼 -->
   <div class="hero-bg">
-    <img src="img/hero-bg.jpg" alt="보건대학교 특강 중인 안경사 조성인" loading="eager"/>
+    <!-- 슬라이드 1: lecture-2 (강의자 우측 클로즈업) -->
+    <div class="hero-slide">
+      <img src="img/hero-bg.jpg"
+           alt="안경사 조성인 — 대전보건대학교 특강 강의 장면"
+           loading="eager" fetchpriority="high"/>
+    </div>
+    <!-- 슬라이드 2: lecture-1 (강의실 전경 + 청중) -->
+    <div class="hero-slide">
+      <img src="img/hero-bg2.jpg"
+           alt="안경사 조성인 — 주변부 왜곡 강의 전경"
+           loading="eager"/>
+    </div>
+    <!-- 공용 오버레이 -->
     <div class="hero-ov"></div>
   </div>
 
-  <!-- 세로 골드 라인 (사진과 텍스트 영역 경계) -->
+  <!-- 사진-텍스트 경계 골드 라인 -->
   <div class="hero-line-accent"></div>
 
-  <!-- 우측 상단 전문성 뱃지 -->
+  <!-- 우상단 전문성 배지 -->
   <div class="hero-badge">
     <div class="hero-badge-item"><em>✦</em>보건대학교 특강 교수</div>
     <div class="hero-badge-item"><em>✦</em>옵토메트리스트 3기</div>
@@ -854,10 +961,16 @@
     <span class="hero-scroll-text">SCROLL</span>
   </div>
 
-  <!-- 사진 크레딧 -->
-  <div class="hero-photo-credit">안경사 조성인 · 대전보건대 특강</div>
+  <!-- 슬라이드 진행 도트 -->
+  <div class="hero-slide-dots" id="heroDots">
+    <div class="hero-slide-dot active" style="--dot-dur:12s"></div>
+    <div class="hero-slide-dot"        style="--dot-dur:12s"></div>
+  </div>
 
-  <!-- 메인 텍스트 (좌측 — max-width로 우측 사진 공간 확보) -->
+  <!-- 사진 크레딧 -->
+  <div class="hero-photo-credit">안경사 조성인 · 대전보건대학교 특강</div>
+
+  <!-- 메인 텍스트 (좌측 컬럼) -->
   <div class="hero-body">
     <div class="hero-text-box">
       <div class="hero-tag">대전 프리미엄 임상 안경원 · Daejeon</div>
@@ -1301,6 +1414,40 @@
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   els.forEach(el => io.observe(el));
+})();
+
+/* ══════════════════════════════════════
+   HERO SLIDESHOW — 도트 진행 표시기
+   CSS 애니메이션(24s)과 타이밍 동기화
+══════════════════════════════════════ */
+(function() {
+  const SLIDE_DUR   = 12000; // 슬라이드 1장 표시 시간(ms)
+  const TOTAL       = 2;     // 슬라이드 수
+  const dots = document.querySelectorAll('.hero-slide-dot');
+  if (!dots.length) return;
+
+  let current = 0;
+
+  function activate(idx) {
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+      /* 진행 바 재시작을 위해 animation 리셋 */
+      if (i === idx) {
+        d.style.animation = 'none';
+        void d.offsetWidth; // reflow
+        d.style.animation = '';
+      }
+    });
+  }
+
+  /* 초기 슬라이드 0 */
+  activate(0);
+
+  /* 12s마다 도트 전환 */
+  setInterval(() => {
+    current = (current + 1) % TOTAL;
+    activate(current);
+  }, SLIDE_DUR);
 })();
 
 /* ══════════════════════════════════════
