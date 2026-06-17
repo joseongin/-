@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>누진다초점 안경 — 조성인 안경원</title>
+<meta name="description" content="부적응률을 최소화하는 누진다초점 처방. 트라이얼 체험·3D 피팅·개인 맞춤 설계로 어지러움 없는 누진안경을 제공합니다."/>
+<link rel="icon" href="favicon.ico"/>
+<link rel="stylesheet" href="css/common.css"/>
+<style>
+/* ── Hero ── */
+.svc-hero {
+  padding: calc(var(--nav-h) + 80px) 0 80px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
+  position: relative; overflow: hidden;
+}
+.svc-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 45%, rgba(184,147,100,.12) 0%, transparent 60%);
+}
+.svc-hero-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px);
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 380px; gap: 64px; align-items: center;
+}
+.svc-hero-eyebrow {
+  font-size: .72rem; font-weight: 700; letter-spacing: .2em;
+  color: var(--gold-l); text-transform: uppercase; margin-bottom: 18px;
+}
+.svc-hero-title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 900; color: #fff; line-height: 1.2;
+  letter-spacing: -.04em; margin-bottom: 22px; word-break: keep-all;
+}
+.svc-hero-title em { font-style: normal; color: var(--gold-l); }
+.svc-hero-desc {
+  font-size: 1.05rem; color: rgba(255,255,255,.72);
+  line-height: 1.9; word-break: keep-all; margin-bottom: 36px;
+}
+.hero-stat-box {
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--rl); padding: 28px;
+}
+.hero-stat-title { font-size: .72rem; font-weight: 700; color: var(--gold-l); letter-spacing: .12em; margin-bottom: 16px; text-transform: uppercase; }
+.hero-stat-num { font-size: 3.2rem; font-weight: 900; color: #fff; letter-spacing: -.06em; line-height: 1; margin-bottom: 8px; }
+.hero-stat-sub { font-size: .88rem; color: rgba(255,255,255,.55); line-height: 1.55; word-break: keep-all; }
+.hero-stat-divider { height: 1px; background: rgba(255,255,255,.1); margin: 20px 0; }
+
+/* ── Breadcrumb ── */
+.breadcrumb {
+  padding: 16px 0; border-bottom: 1px solid var(--bdr); background: var(--off);
+}
+.breadcrumb-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px);
+  display: flex; align-items: center; gap: 8px; font-size: .82rem; color: var(--g400);
+}
+.breadcrumb-inner a { color: var(--g400); transition: color .2s; }
+.breadcrumb-inner a:hover { color: var(--navy); }
+.breadcrumb-inner span { color: var(--navy); font-weight: 600; }
+.breadcrumb-sep { color: var(--g200); }
+
+/* ── Intro Split ── */
+.intro-split {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+}
+.intro-visual {
+  border-radius: var(--rl); overflow: hidden;
+  background: var(--g50); aspect-ratio: 5/4; box-shadow: var(--sh-m);
+  display: flex; align-items: center; justify-content: center;
+}
+.intro-visual svg { width: 110px; height: 110px; opacity: .1; }
+.intro-label { font-size: .7rem; font-weight: 700; letter-spacing: .12em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; }
+.intro-title { font-size: 1.9rem; font-weight: 900; color: var(--navy); line-height: 1.3; word-break: keep-all; margin-bottom: 18px; letter-spacing: -.04em; }
+.intro-lead {
+  font-size: 1rem; color: var(--sub); line-height: 1.9; word-break: keep-all;
+  border-left: 3px solid var(--gold); padding-left: 18px; margin-bottom: 28px;
+}
+
+/* ── 4 Method Cards ── */
+.method-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px;
+}
+.method-card {
+  background: #fff; border-radius: var(--rl); padding: 36px 30px;
+  box-shadow: var(--sh-s); border-top: 3px solid var(--navy);
+  transition: border-top-color .25s, box-shadow .25s, transform .25s;
+}
+.method-card:hover { border-top-color: var(--gold); box-shadow: var(--sh-m); transform: translateY(-4px); }
+.method-num { font-size: .72rem; font-weight: 700; color: var(--gold); letter-spacing: .1em; margin-bottom: 14px; }
+.method-title { font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 10px; word-break: keep-all; }
+.method-desc { font-size: .9rem; color: var(--sub); line-height: 1.85; word-break: keep-all; }
+.method-icon { width: 44px; height: 44px; background: var(--g50); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+.method-icon svg { width: 22px; height: 22px; stroke: var(--navy); fill: none; stroke-width: 1.8; }
+
+/* ── Lens Types ── */
+.lens-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.lens-card {
+  border: 2px solid var(--bdr); border-radius: var(--rl); padding: 32px 26px;
+  transition: border-color .25s, box-shadow .25s;
+}
+.lens-card:hover { border-color: var(--gold); box-shadow: var(--sh-s); }
+.lens-label { font-size: .7rem; font-weight: 700; color: var(--gold); letter-spacing: .1em; margin-bottom: 10px; }
+.lens-name { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin-bottom: 10px; word-break: keep-all; }
+.lens-desc { font-size: .88rem; color: var(--sub); line-height: 1.8; word-break: keep-all; margin-bottom: 16px; }
+.lens-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.lens-tag {
+  padding: 3px 10px; background: var(--off); border: 1px solid var(--bdr);
+  border-radius: 20px; font-size: .75rem; color: var(--text);
+}
+
+/* ── Who ── */
+.who-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.who-card { background: #fff; border-radius: var(--r); padding: 24px 22px; box-shadow: var(--sh-s); border-left: 3px solid var(--gold); }
+.who-card strong { display: block; color: var(--navy); margin-bottom: 6px; font-size: .95rem; word-break: keep-all; }
+.who-card p { font-size: .88rem; color: var(--sub); line-height: 1.75; word-break: keep-all; }
+
+/* ── CTA ── */
+.cta-dark { background: var(--navy); padding: var(--sec-py) 0; text-align: center; }
+
+/* ── Responsive ── */
+@media(max-width:1024px) {
+  .svc-hero-inner { grid-template-columns: 1fr; }
+  .hero-stat-box { display: none; }
+  .intro-split { grid-template-columns: 1fr; }
+  .intro-visual { display: none; }
+  .method-grid { grid-template-columns: 1fr; }
+  .lens-grid { grid-template-columns: 1fr 1fr; }
+  .who-grid { grid-template-columns: 1fr; }
+}
+@media(max-width:600px) {
+  .lens-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Readability Enhancements ── */
+.intro-lead {
+  font-size: 1.02rem; line-height: 2.0;
+  letter-spacing: .01em; margin-bottom: 32px;
+}
+.method-card { padding: 40px 34px; }
+.method-desc {
+  font-size: .93rem; line-height: 2.0;
+  letter-spacing: .01em;
+}
+.method-title { margin-bottom: 12px; }
+.lens-card { padding: 36px 30px; }
+.lens-desc {
+  font-size: .92rem; line-height: 1.95;
+  letter-spacing: .01em; margin-bottom: 20px;
+}
+.lens-name { margin-bottom: 12px; }
+.who-card { padding: 28px 26px; }
+.who-card p {
+  font-size: .92rem; line-height: 1.9;
+  letter-spacing: .01em;
+}
+</style>
+</head>
+<body>
+<div id="ticker-slot"></div>
+
+<!-- ── Breadcrumb ── -->
+<nav class="breadcrumb" style="margin-top:var(--nav-h);">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="services.html">Specialized Optical Care</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>누진다초점</span>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="svc-hero">
+  <div class="svc-hero-inner">
+    <div>
+      <p class="svc-hero-eyebrow">Specialized Optical Care · Progressive Lenses</p>
+      <h1 class="svc-hero-title">누진다초점 안경<br><em>부적응 없는 누진 처방</em></h1>
+      <p class="svc-hero-desc">
+        누진다초점 부적응률은 평균 15~20%로 알려져 있습니다.<br>
+        조성인 안경원은 6,000건 이상의 누진 처방 임상 경험을 바탕으로<br>
+        트라이얼 체험·3D 피팅·개인 맞춤 설계로 이 수치를 최소화합니다.
+      </p>
+    </div>
+    <div class="hero-stat-box">
+      <div class="hero-stat-title">Progressive Experience</div>
+      <div class="hero-stat-num">6K+</div>
+      <div class="hero-stat-sub">누진다초점 처방 임상<br>누적 6,000건 이상</div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat-title">Adaptation Protocol</div>
+      <div class="hero-stat-num">3단계</div>
+      <div class="hero-stat-sub">트라이얼 → 3D 피팅 → 재방문<br>부적응 최소화 프로토콜</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 왜 조성인 누진인가 ── -->
+<section class="page-sec">
+  <div class="wrap">
+    <div class="intro-split rv">
+      <div class="intro-visual">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="15" y="35" width="70" height="30" rx="15" stroke="#0b1f3a" stroke-width="2"/>
+          <circle cx="38" cy="50" r="8" stroke="#0b1f3a" stroke-width="1.5"/>
+          <circle cx="62" cy="50" r="8" stroke="#0b1f3a" stroke-width="1.5"/>
+          <path d="M50 35 Q50 20 50 15" stroke="#0b1f3a" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <line x1="8" y1="42" x2="15" y2="45" stroke="#0b1f3a" stroke-width="1.5"/>
+          <line x1="85" y1="45" x2="92" y2="42" stroke="#0b1f3a" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div>
+        <p class="intro-label">WHY PROGRESSIVE</p>
+        <h2 class="intro-title">누진렌즈, 왜<br>부적응이 생기나요</h2>
+        <p class="intro-lead">
+          누진렌즈 부적응의 주요 원인은 가입도 오차, 피팅 파라미터 불일치,
+          생활 패턴에 맞지 않는 설계 선택입니다. 수치상 처방값이 맞아도
+          이 세 가지가 틀어지면 어지러움·흔들림이 발생합니다.
+        </p>
+        <p style="font-size:.9rem; color:var(--sub); line-height:1.85; word-break:keep-all;">
+          조성인 안경원은 <strong style="color:var(--navy);">트라이얼 체험으로 가입도를 직접 결정</strong>하고,
+          <strong style="color:var(--navy);">3D 피팅 파라미터를 정밀 측정</strong>하며,
+          <strong style="color:var(--navy);">생활 패턴별 렌즈 설계를 맞춤 선택</strong>합니다.
+          착용 후에는 재방문 피팅으로 최종 적응을 완성합니다.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4 Methods ── -->
+<section class="page-sec page-sec--off">
+  <div class="wrap">
+    <div class="s-head rv">
+      <p class="s-label">OUR METHOD</p>
+      <h2 class="s-title">부적응을 줄이는 4가지 방법</h2>
+      <p class="s-sub">수치 처방에서 착용 완성까지 모든 단계를 관리합니다.</p>
+      <div class="s-divider"></div>
+    </div>
+    <div class="method-grid rv">
+      <div class="method-card">
+        <div class="method-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+        </div>
+        <div class="method-num">METHOD 01 · Trial</div>
+        <h3 class="method-title">처방 전 트라이얼 가입도 체험</h3>
+        <p class="method-desc">
+          CHARMANT 트라이얼 렌즈로 가입도를 0.25D 단계별로 착용 체험합니다.
+          어지러움·흔들림·시야 범위를 제작 전에 직접 확인하고,
+          가장 편안한 가입도를 함께 결정합니다.
+          처음 누진을 시도하는 분, 이전 부적응 경험이 있는 분에게 필수 과정입니다.
+        </p>
+      </div>
+      <div class="method-card">
+        <div class="method-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>
+        </div>
+        <div class="method-num">METHOD 02 · 3D Fitting</div>
+        <h3 class="method-title">3D 피팅 파라미터 정밀 측정</h3>
+        <p class="method-desc">
+          Face Form Angle, Vertex Distance, Pantoscopic Tilt, 단안 PD 등
+          누진 설계에 영향을 미치는 6가지 피팅 파라미터를 정밀 측정합니다.
+          이 수치가 렌즈 제조사에 전달되어 개인 맞춤 누진 설계가 제작됩니다.
+        </p>
+      </div>
+      <div class="method-card">
+        <div class="method-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="method-num">METHOD 03 · Design Selection</div>
+        <h3 class="method-title">생활 패턴별 렌즈 설계 선택</h3>
+        <p class="method-desc">
+          운전 중심(원거리 시야 넓음), 사무·IT 중심(중간거리 시야 넓음),
+          야외 활동 중심(전체 균형형) 등 생활 패턴에 따라 최적화된 누진 설계를 추천합니다.
+          처방값이 같아도 설계 선택에 따라 착용감이 크게 달라집니다.
+        </p>
+      </div>
+      <div class="method-card">
+        <div class="method-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="method-num">METHOD 04 · Follow-up</div>
+        <h3 class="method-title">착용 후 재방문 적응 관리</h3>
+        <p class="method-desc">
+          착용 후 1~2주 내 재방문을 통해 피팅 미세 조정과 착용 습관 교육을 진행합니다.
+          시선 이동 습관, 사용 거리별 시야 활용법 등 실용적인 적응 교육으로
+          누진렌즈 적응 기간을 단축합니다.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 렌즈 설계 유형 ── -->
+<section class="page-sec">
+  <div class="wrap">
+    <div class="s-head rv">
+      <p class="s-label">LENS DESIGN</p>
+      <h2 class="s-title">생활 패턴별 누진 설계</h2>
+      <p class="s-sub">어떤 설계가 맞는지 상담을 통해 함께 결정합니다.</p>
+      <div class="s-divider"></div>
+    </div>
+    <div class="lens-grid rv">
+      <div class="lens-card">
+        <div class="lens-label">Design A · Driving</div>
+        <div class="lens-name">드라이빙 설계</div>
+        <p class="lens-desc">원거리 시야 폭이 넓고 중간·근거리는 보조적 역할. 운전이 많은 분, 야외 활동 중심인 분에게 적합합니다.</p>
+        <div class="lens-tags">
+          <span class="lens-tag">운전 중심</span>
+          <span class="lens-tag">야외 활동</span>
+          <span class="lens-tag">원거리 우선</span>
+        </div>
+      </div>
+      <div class="lens-card">
+        <div class="lens-label">Design B · Office</div>
+        <div class="lens-name">오피스·IT 설계</div>
+        <p class="lens-desc">중간거리(모니터·독서)와 근거리(스마트폰) 시야가 넓음. 사무직, IT 종사자, 독서량이 많은 분에게 적합합니다.</p>
+        <div class="lens-tags">
+          <span class="lens-tag">모니터 작업</span>
+          <span class="lens-tag">독서</span>
+          <span class="lens-tag">실내 중심</span>
+        </div>
+      </div>
+      <div class="lens-card">
+        <div class="lens-label">Design C · Individual</div>
+        <div class="lens-name">개인 맞춤 설계</div>
+        <p class="lens-desc">3D 피팅 파라미터 + ZEISS 웨이브프론트 데이터를 반영한 완전 개인화 설계. 고도수·까다로운 케이스에 적합합니다.</p>
+        <div class="lens-tags">
+          <span class="lens-tag">ZEISS Individual</span>
+          <span class="lens-tag">고도수</span>
+          <span class="lens-tag">고위수차 보정</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 이런 분께 ── -->
+<section class="page-sec page-sec--off">
+  <div class="wrap">
+    <div class="s-head rv">
+      <p class="s-label">FOR WHOM</p>
+      <h2 class="s-title">이런 분께 권합니다</h2>
+      <div class="s-divider"></div>
+    </div>
+    <div class="who-grid rv">
+      <div class="who-card">
+        <strong>처음으로 누진렌즈를 시도하는 분</strong>
+        <p>트라이얼 체험으로 미리 착용감을 확인하고, 부적응 없이 성공적인 첫 누진 경험을 만듭니다.</p>
+      </div>
+      <div class="who-card">
+        <strong>이전 누진안경이 불편했던 분</strong>
+        <p>이전 처방의 어떤 부분이 문제였는지 분석하고, 개선된 파라미터로 재처방합니다.</p>
+      </div>
+      <div class="who-card">
+        <strong>돋보기 없이 원근 모두 보고 싶은 분</strong>
+        <p>가입도 선택부터 설계 추천까지, 생활 패턴에 맞는 최적 누진 솔루션을 제안합니다.</p>
+      </div>
+      <div class="who-card">
+        <strong>스마트폰·운전 모두 편하게 원하는 분</strong>
+        <p>생활 환경 분석을 통해 두 가지를 모두 만족하는 설계를 선택합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-dark">
+  <div class="wrap">
+    <p style="font-size:.72rem; font-weight:700; letter-spacing:.2em; color:var(--gold-l); text-transform:uppercase; margin-bottom:18px; display:block;">RESERVATION</p>
+    <h2 class="s-title s-title--lt">누진렌즈, 이번엔 편하게</h2>
+    <p class="s-sub s-sub--lt" style="margin-bottom:40px;">
+      6,000건 이상의 임상 경험과 3단계 부적응 예방 프로토콜.<br>
+      조성인 안경원에서 누진다초점을 처음으로 성공시켜 보세요.
+    </p>
+  </div>
+</section>
+
+<script src="js/components.js"></script>
+<script src="js/common.js"></script>
+</body>
+</html>

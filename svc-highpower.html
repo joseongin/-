@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>고도수 안경 — 조성인 안경원</title>
+<meta name="description" content="±6D 이상 고도근시·고도난시 정밀 맞춤 제작. 최소 두께·경량화·야간 수차 보정·광학중심 0.1mm 설정으로 고도수 안경을 완성합니다."/>
+<link rel="icon" href="favicon.ico"/>
+<link rel="stylesheet" href="css/common.css"/>
+<style>
+/* ── Hero ── */
+.svc-hero {
+  padding: calc(var(--nav-h) + 80px) 0 80px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
+  position: relative; overflow: hidden;
+}
+.svc-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(184,147,100,.12) 0%, transparent 60%);
+}
+.svc-hero-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px);
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 380px; gap: 64px; align-items: center;
+}
+.svc-hero-eyebrow {
+  font-size: .72rem; font-weight: 700; letter-spacing: .2em;
+  color: var(--gold-l); text-transform: uppercase; margin-bottom: 18px;
+}
+.svc-hero-title {
+  font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: #fff;
+  line-height: 1.2; letter-spacing: -.04em; margin-bottom: 22px; word-break: keep-all;
+}
+.svc-hero-title em { font-style: normal; color: var(--gold-l); }
+.svc-hero-desc {
+  font-size: 1.05rem; color: rgba(255,255,255,.72);
+  line-height: 1.9; word-break: keep-all; margin-bottom: 36px;
+}
+.hero-range-box {
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--rl); padding: 28px; display: flex; flex-direction: column; gap: 14px;
+}
+.range-item { display: flex; align-items: center; justify-content: space-between; }
+.range-label { font-size: .82rem; color: rgba(255,255,255,.6); font-weight: 500; }
+.range-val { font-size: 1.1rem; font-weight: 800; color: var(--gold-l); }
+.range-divider { height: 1px; background: rgba(255,255,255,.1); }
+
+/* ── Breadcrumb ── */
+.breadcrumb {
+  padding: 16px 0; border-bottom: 1px solid var(--bdr); background: var(--off);
+}
+.breadcrumb-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px);
+  display: flex; align-items: center; gap: 8px; font-size: .82rem; color: var(--g400);
+}
+.breadcrumb-inner a { color: var(--g400); transition: color .2s; }
+.breadcrumb-inner a:hover { color: var(--navy); }
+.breadcrumb-inner span { color: var(--navy); font-weight: 600; }
+.breadcrumb-sep { color: var(--g200); }
+
+/* ── Challenge + Solution Split ── */
+.cs-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+  border-radius: var(--rl); overflow: hidden; box-shadow: var(--sh-m);
+}
+.cs-col { padding: 44px 40px; }
+.cs-col.challenge { background: var(--off); }
+.cs-col.solution { background: var(--navy); }
+.cs-head {
+  font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid;
+}
+.cs-col.challenge .cs-head { color: #94a3b8; border-color: var(--bdr); }
+.cs-col.solution .cs-head { color: var(--gold); border-color: rgba(184,147,100,.3); }
+.cs-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.cs-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: .9rem; line-height: 1.7; word-break: keep-all;
+}
+.cs-col.challenge .cs-list li { color: #64748b; }
+.cs-col.solution .cs-list li { color: rgba(255,255,255,.78); }
+.cs-icon { flex-shrink: 0; margin-top: 2px; }
+
+/* ── 4 Precision Points ── */
+.prec-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+}
+.prec-card {
+  text-align: center; background: #fff; border-radius: var(--rl);
+  padding: 36px 24px; box-shadow: var(--sh-s);
+  border-bottom: 3px solid transparent;
+  transition: border-color .25s, transform .25s;
+}
+.prec-card:hover { border-bottom-color: var(--gold); transform: translateY(-4px); }
+.prec-icon {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--g50); margin: 0 auto 18px;
+  display: flex; align-items: center; justify-content: center;
+}
+.prec-icon svg { width: 26px; height: 26px; stroke: var(--navy); fill: none; stroke-width: 1.8; }
+.prec-num { font-size: .7rem; font-weight: 700; color: var(--gold); letter-spacing: .1em; margin-bottom: 10px; }
+.prec-title { font-size: .98rem; font-weight: 800; color: var(--navy); margin-bottom: 10px; word-break: keep-all; }
+.prec-desc { font-size: .85rem; color: var(--sub); line-height: 1.75; word-break: keep-all; }
+
+/* ── Refraction Index Guide ── */
+.index-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  border-radius: var(--rl); overflow: hidden; box-shadow: var(--sh-s);
+}
+.index-table th {
+  padding: 16px 20px; font-size: .82rem; font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase;
+  background: var(--navy); color: #fff; text-align: left;
+}
+.index-table th.center { text-align: center; }
+.index-table th.highlight { background: var(--gold); }
+.index-table td {
+  padding: 14px 20px; font-size: .9rem; color: var(--text);
+  border-bottom: 1px solid var(--bdr); background: #fff;
+  word-break: keep-all;
+}
+.index-table td.center { text-align: center; }
+.index-table td.highlight { background: rgba(184,147,100,.06); font-weight: 600; }
+.index-table tr:last-child td { border-bottom: none; }
+
+/* ── Who ── */
+.who-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.who-card { background: #fff; border-radius: var(--r); padding: 24px 22px; box-shadow: var(--sh-s); border-left: 3px solid var(--gold); }
+.who-card strong { display: block; color: var(--navy); margin-bottom: 6px; font-size: .95rem; word-break: keep-all; }
+.who-card p { font-size: .88rem; color: var(--sub); line-height: 1.75; word-break: keep-all; }
+
+/* ── CTA ── */
+.cta-dark { background: var(--navy); padding: var(--sec-py) 0; text-align: center; }
+
+/* ── Responsive ── */
+@media(max-width:1024px) {
+  .svc-hero-inner { grid-template-columns: 1fr; }
+  .hero-range-box { display: none; }
+  .cs-grid { grid-template-columns: 1fr; }
+  .prec-grid { grid-template-columns: 1fr 1fr; }
+  .who-grid { grid-template-columns: 1fr; }
+}
+@media(max-width:600px) {
+  .prec-grid { grid-template-columns: 1fr; }
+  .index-table { font-size: .82rem; }
+  .index-table th, .index-table td { padding: 10px 12px; }
+}
+
+/* ── Readability Enhancements ── */
+.cs-col { padding: 48px 44px; }
+.cs-list { gap: 18px; }
+.cs-list li {
+  font-size: .93rem; line-height: 1.9;
+  letter-spacing: .01em;
+}
+.prec-card { padding: 40px 28px; }
+.prec-desc {
+  font-size: .88rem; line-height: 1.95;
+  letter-spacing: .01em;
+}
+.prec-title { margin-bottom: 12px; }
+.index-table td {
+  font-size: .92rem; line-height: 1.7;
+  padding: 16px 22px;
+}
+.who-card { padding: 28px 26px; }
+.who-card p {
+  font-size: .92rem; line-height: 1.9;
+  letter-spacing: .01em;
+}
+</style>
+</head>
+<body>
+<div id="ticker-slot"></div>
+
+<!-- ── Breadcrumb ── -->
+<nav class="breadcrumb" style="margin-top:var(--nav-h);">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="services.html">Specialized Optical Care</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>고도수 안경</span>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="svc-hero">
+  <div class="svc-hero-inner">
+    <div>
+      <p class="svc-hero-eyebrow">Specialized Optical Care · High Power Lenses</p>
+      <h1 class="svc-hero-title">고도수 안경<br><em>±6D 이상 정밀 맞춤 제작</em></h1>
+      <p class="svc-hero-desc">
+        고도수 안경은 미세한 처방 오차가 심각한 불편으로 이어집니다.<br>
+        광학중심 0.1mm 정밀 설정, 웨이브프론트 야간 수차 보정,<br>
+        트라이얼 착용 체험으로 고도수 안경의 기준을 높입니다.
+      </p>
+    </div>
+    <div class="hero-range-box">
+      <div class="range-item">
+        <span class="range-label">고도근시 기준</span>
+        <span class="range-val">-6.00D 이상</span>
+      </div>
+      <div class="range-divider"></div>
+      <div class="range-item">
+        <span class="range-label">고도난시 기준</span>
+        <span class="range-val">-3.00D 이상</span>
+      </div>
+      <div class="range-divider"></div>
+      <div class="range-item">
+        <span class="range-label">광학중심 정밀도</span>
+        <span class="range-val">0.1mm</span>
+      </div>
+      <div class="range-divider"></div>
+      <div class="range-item">
+        <span class="range-label">최고 굴절률</span>
+        <span class="range-val">1.76 Plastic</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Challenge vs Solution ── -->
+<section class="page-sec">
+  <div class="wrap">
+    <div class="s-head rv">
+      <p class="s-label">THE CHALLENGE</p>
+      <h2 class="s-title">고도수 안경, 무엇이 어려운가</h2>
+      <p class="s-sub">일반 안경과 달리 고도수는 각 요소의 오차가 착용 불편으로 증폭됩니다.</p>
+      <div class="s-divider"></div>
+    </div>
+    <div class="cs-grid rv">
+      <div class="cs-col challenge">
+        <div class="cs-head">고도수 안경의 어려움</div>
+        <ul class="cs-list">
+          <li><span class="cs-icon">⚠️</span>광학중심 오차가 프리즘 효과로 증폭 → 눈 피로·두통</li>
+          <li><span class="cs-icon">⚠️</span>렌즈 두께·무게가 증가 → 외관 불만족·코 눌림</li>
+          <li><span class="cs-icon">⚠️</span>야간 운전 시 빛번짐·달무리 심화</li>
+          <li><span class="cs-icon">⚠️</span>고도수 누진다초점 처방 난이도 높음</li>
+          <li><span class="cs-icon">⚠️</span>도수 변경 시 배율 차이로 적응 어려움</li>
+        </ul>
+      </div>
+      <div class="cs-col solution">
+        <div class="cs-head">조성인 안경원의 해법</div>
+        <ul class="cs-list">
+          <li><span class="cs-icon" style="color:var(--gold);">✓</span>디지털 PD 측정기로 0.1mm 단위 광학중심 정밀 설정</li>
+          <li><span class="cs-icon" style="color:var(--gold);">✓</span>1.74~1.76 최고굴절률 렌즈 + 최소화 설계로 두께 감소</li>
+          <li><span class="cs-icon" style="color:var(--gold);">✓</span>ZEISS 웨이브프론트 야간 수차 데이터 처방 반영</li>
+          <li><span class="cs-icon" style="color:var(--gold);">✓</span>고도수 누진 트라이얼 체험으로 부적응 예방</li>
+          <li><span class="cs-icon" style="color:var(--gold);">✓</span>처방 변경 시 트라이얼로 배율 차이 미리 체험</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4 Precision Points ── -->
+<section class="page-sec page-sec--off">
+  <div class="wrap">
+    <div class="s-head rv">
+      <p class="s-label">PRECISION POINTS</p>
+      <h2 class="s-title">고도수 처방 4가지 정밀 포인트</h2>
+      <p class="s-sub">고도수일수록 각 측정 항목의 정밀도가 결과에 미치는 영향이 큽니다.</p>
+      <div class="s-divider"></div>
+    </div>
+    <div class="prec-grid rv">
+      <div class="prec-card">
+        <div class="prec-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        </div>
+        <div class="prec-num">POINT 01 · PD</div>
+        <h3 class="prec-title">광학중심 0.1mm 정밀 설정</h3>
+        <p class="prec-desc">고도수에서는 광학중심이 1mm만 어긋나도 1~2프리즘 오차가 생깁니다. 디지털 PD 측정기로 단안 PD를 0.1mm 단위로 정밀 설정합니다.</p>
+      </div>
+      <div class="prec-card">
+        <div class="prec-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        </div>
+        <div class="prec-num">POINT 02 · Thickness</div>
+        <h3 class="prec-title">최소 두께·경량화 설계</h3>
+        <p class="prec-desc">고굴절률(1.74~1.76) 렌즈 소재 선택, 광학중심 최적화 가공으로 렌즈 두께를 최소화합니다. 경량 티타늄 프레임과의 조합으로 착용감을 높입니다.</p>
+      </div>
+      <div class="prec-card">
+        <div class="prec-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </div>
+        <div class="prec-num">POINT 03 · Wavefront</div>
+        <h3 class="prec-title">야간 수차 보정 처방</h3>
+        <p class="prec-desc">고도근시에서 흔한 야간 빛번짐·하이로(Halo)를 ZEISS 웨이브프론트 데이터로 분석하고, Individual 렌즈 설계에 수차 보정값을 반영합니다.</p>
+      </div>
+      <div class="prec-card">
+        <div class="prec-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="prec-num">POINT 04 · Trial</div>
+        <h3 class="prec-title">배율·왜곡 트라이얼 체험</h3>
+        <p class="prec-desc">처방 변경 시 배율 차이와 주변부 왜곡을 트라이얼 렌즈로 미리 경험합니다. 심리적 준비와 정확한 도수 결정에 도움이 되며 적응 기간을 단축합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 굴절률 가이드 ── -->
+<section class="page-sec">
+  <div class="wrap">
+    <div class="s-head rv">
+      <p class="s-label">REFRACTION INDEX</p>
+      <h2 class="s-title">굴절률별 렌즈 선택 가이드</h2>
+      <p class="s-sub">도수에 따라 최적 굴절률이 다릅니다. 상담을 통해 함께 선택합니다.</p>
+      <div class="s-divider"></div>
+    </div>
+    <div class="rv" style="overflow-x:auto;">
+      <table class="index-table">
+        <thead>
+          <tr>
+            <th>굴절률</th>
+            <th class="center">적합 도수 범위</th>
+            <th class="center highlight">특징</th>
+            <th class="center">비고</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1.56 (Standard)</td>
+            <td class="center">±2.00D 이하</td>
+            <td class="center highlight">표준 두께, 경제적</td>
+            <td class="center">저도수 일반용</td>
+          </tr>
+          <tr>
+            <td>1.60 (Mid-index)</td>
+            <td class="center">±3.00D 이하</td>
+            <td class="center highlight">1.56 대비 두께 20% 감소</td>
+            <td class="center">중도수 권장</td>
+          </tr>
+          <tr>
+            <td>1.67 (High-index)</td>
+            <td class="center">±5.00D 이하</td>
+            <td class="center highlight">경량·슬림, 가성비 우수</td>
+            <td class="center">고도수 기본 선택</td>
+          </tr>
+          <tr>
+            <td><strong>1.74 (Ultra-high)</strong></td>
+            <td class="center"><strong>±6.00D 이상</strong></td>
+            <td class="center highlight"><strong>최고 슬림, 고도수 최적</strong></td>
+            <td class="center"><strong>고도수 권장</strong></td>
+          </tr>
+          <tr>
+            <td>1.76 (Ultra-high +)</td>
+            <td class="center">-8.00D 이상 근시</td>
+            <td class="center highlight">최소 두께 달성</td>
+            <td class="center">초고도 근시용</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── 이런 분께 ── -->
+<section class="page-sec page-sec--off">
+  <div class="wrap">
+    <div class="s-head rv">
+      <p class="s-label">FOR WHOM</p>
+      <h2 class="s-title">이런 분께 권합니다</h2>
+      <div class="s-divider"></div>
+    </div>
+    <div class="who-grid rv">
+      <div class="who-card">
+        <strong>근시 -6D 이상 고도근시</strong>
+        <p>광학중심 정밀 설정, 야간 수차 보정, 최고굴절률 경량화로 고도근시에 최적화된 안경을 제작합니다.</p>
+      </div>
+      <div class="who-card">
+        <strong>난시 -3D 이상 고도난시</strong>
+        <p>정확한 축 결정과 교차 검증으로 고도난시에서 발생하는 시야 왜곡을 최소화합니다.</p>
+      </div>
+      <div class="who-card">
+        <strong>야간 운전이 불편한 고도근시 분</strong>
+        <p>ZEISS 웨이브프론트로 야간 빛번짐 원인을 분석하고 수차 보정 처방으로 야간 시력 품질을 높입니다.</p>
+      </div>
+      <div class="who-card">
+        <strong>고도수 누진다초점이 필요한 분</strong>
+        <p>고도수와 누진이 결합된 까다로운 케이스도 트라이얼 체험 + 3D 피팅으로 안전하게 처방합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-dark">
+  <div class="wrap">
+    <p style="font-size:.72rem; font-weight:700; letter-spacing:.2em; color:var(--gold-l); text-transform:uppercase; margin-bottom:18px; display:block;">RESERVATION</p>
+    <h2 class="s-title s-title--lt">고도수 안경, 이제 제대로</h2>
+    <p class="s-sub s-sub--lt" style="margin-bottom:40px;">
+      고도수일수록 정밀한 처방과 피팅이 중요합니다.<br>
+      조성인 안경원의 고도수 전문 프로세스로 만나보세요.
+    </p>
+  </div>
+</section>
+
+<script src="js/components.js"></script>
+<script src="js/common.js"></script>
+</body>
+</html>

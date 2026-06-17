@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Contact — 조성인 안경원</title>
+<meta name="description" content="대전 서구 둔산북로 22 153·154호. 조성인 안경원 위치, 영업시간, 주차, 예약 안내."/>
+<link rel="icon" href="favicon.ico"/>
+<link rel="stylesheet" href="css/common.css"/>
+<style>
+/* ── 지도 + 정보 ── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 48px;
+  align-items: start;
+}
+.map-wrap {
+  border-radius: var(--rl);
+  overflow: hidden;
+  box-shadow: var(--sh-m);
+  aspect-ratio: 4/3;
+  background: var(--g50);
+  position: relative;
+}
+.map-wrap iframe {
+  width: 100%; height: 100%;
+  border: none; display: block;
+}
+
+/* ── 정보 패널 ── */
+.info-card {
+  background: var(--navy);
+  border-radius: var(--rl);
+  overflow: hidden;
+}
+.info-card-head {
+  padding: 32px 36px 28px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.info-card-head h2 {
+  font-size: 1.25rem; font-weight: 900; color: #fff;
+  letter-spacing: -.025em; margin-bottom: 4px;
+}
+.info-card-head p { font-size: .8rem; color: rgba(255,255,255,.45); letter-spacing: .06em; }
+.info-rows { padding: 8px 36px 8px; }
+.info-row {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.info-row:last-child { border-bottom: none; }
+.info-row-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(255,255,255,.07);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; color: var(--gold-l); flex-shrink: 0; font-weight: 700;
+}
+.info-row-label {
+  font-size: .65rem; font-weight: 700; letter-spacing: .12em;
+  color: var(--gold-l); text-transform: uppercase; margin-bottom: 5px;
+}
+.info-row-value {
+  font-size: .92rem; color: rgba(255,255,255,.88);
+  font-weight: 600; line-height: 1.65; word-break: keep-all;
+}
+.info-row-sub { font-size: .78rem; color: rgba(255,255,255,.4); margin-top: 3px; }
+
+.info-btns {
+  padding: 20px 36px 32px;
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+.info-btns .btn { flex: 1; min-width: 120px; justify-content: center; font-size: .88rem; padding: 12px 16px; }
+
+/* ── 예약 채널 ── */
+.channel-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+}
+.channel-card {
+  border-radius: var(--rl);
+  padding: 32px 20px;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  text-decoration: none;
+  transition: transform .22s, box-shadow .22s;
+}
+.channel-card:hover { transform: translateY(-4px); box-shadow: var(--sh-m); }
+.channel-card.naver { background: #03c75a; color: #fff; }
+.channel-card.phone { background: var(--navy); color: #fff; }
+.channel-card.talk  { background: #fee500; color: #191919; }
+.channel-card.insta { background: linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); color: #fff; }
+.channel-icon { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+.channel-name { font-size: .93rem; font-weight: 800; }
+.channel-desc { font-size: .76rem; opacity: .82; word-break: keep-all; line-height: 1.5; }
+
+/* ── Hours Table ── */
+.hours-table { width: 100%; border-collapse: collapse; border-radius: var(--rl); overflow: hidden; box-shadow: var(--sh-s); }
+.hours-table th {
+  background: var(--navy); color: #fff;
+  padding: 15px 24px; text-align: left;
+  font-size: .85rem; font-weight: 700; letter-spacing: .04em;
+}
+.hours-table td { padding: 14px 24px; border-bottom: 1px solid var(--bdr); font-size: .95rem; color: var(--text); }
+.hours-table tr:last-child td { border-bottom: none; }
+.hours-table tr:nth-child(even) td { background: var(--off); }
+.hours-closed { color: #e53e3e; font-weight: 700; }
+
+/* ── FAQ ── */
+.faq-list { display: flex; flex-direction: column; gap: 8px; }
+.faq-item { background: #fff; border: 1px solid var(--bdr); border-radius: var(--r); overflow: hidden; }
+.faq-q {
+  padding: 20px 26px;
+  font-size: 1rem; font-weight: 700; color: var(--navy);
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  word-break: keep-all; transition: background .18s;
+}
+.faq-q:hover { background: var(--off); }
+.faq-toggle { font-size: .7rem; color: var(--g400); transition: transform .25s; flex-shrink: 0; }
+.faq-item.open .faq-toggle { transform: rotate(180deg); color: var(--navy); }
+.faq-a {
+  padding: 0 26px;
+  max-height: 0; overflow: hidden;
+  font-size: .95rem; color: var(--sub); line-height: 1.88; word-break: keep-all;
+  transition: max-height .3s ease, padding .3s ease;
+}
+.faq-item.open .faq-a { max-height: 400px; padding: 0 26px 22px; }
+
+/* ── Responsive ── */
+@media (max-width: 1060px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .map-wrap { aspect-ratio: 16/9; }
+  .channel-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .channel-grid { grid-template-columns: repeat(2, 1fr); }
+  .info-card-head { padding: 24px 24px 20px; }
+  .info-rows { padding: 0 24px; }
+  .info-btns { padding: 16px 24px 24px; }
+}
+</style>
+</head>
+<body>
+<div id="ticker-slot"></div>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="wrap page-hero-inner rv">
+    <div class="page-hero-tag">Contact &amp; Location</div>
+    <h1 class="page-hero-title">오시는 길</h1>
+    <p class="page-hero-sub">
+      대전 둔산동 꽃시장 1층에 위치합니다.<br>
+      지상 150대 주차 가능. 매주 월요일 정기 휴무.
+    </p>
+  </div>
+</section>
+
+<!-- ── 지도 + 정보 ── -->
+<section class="page-sec">
+  <div class="wrap">
+    <div class="contact-grid">
+      <!-- 네이버 지도 임베드 -->
+      <div class="map-wrap rv">
+        <iframe
+          src="https://map.naver.com/p/entry/place/1694854628?c=15,0,0,0,dh&ismapdivVisible=true"
+          title="조성인 안경원 위치 — 네이버 지도"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <!-- 정보 패널 -->
+      <div class="rv d1">
+        <div class="info-card">
+          <div class="info-card-head">
+            <h2>조성인 안경원</h2>
+            <p>JOSEONGIN OPTICAL · DAEJEON</p>
+          </div>
+          <div class="info-rows">
+            <div class="info-row">
+              <div class="info-row-icon">&#9711;</div>
+              <div>
+                <p class="info-row-label">Address</p>
+                <p class="info-row-value">대전광역시 서구 둔산북로 22<br>153호 · 154호</p>
+                <p class="info-row-sub">둔산동 꽃시장 1층</p>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-icon">&#9742;</div>
+              <div>
+                <p class="info-row-label">Phone</p>
+                <p class="info-row-value">
+                  <a href="tel:05071439-0078" style="color:inherit;">0507-1439-0078</a>
+                </p>
+                <p class="info-row-sub">전화 및 문자 예약 가능</p>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-icon">&#9632;</div>
+              <div>
+                <p class="info-row-label">Hours</p>
+                <p class="info-row-value">화&#8211;금 10:00 — 19:30 &nbsp;/&nbsp; 토&#8211;일 10:00 — 19:00</p>
+                <p class="info-row-sub">월요일 정기 휴무</p>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-icon">P</div>
+              <div>
+                <p class="info-row-label">Parking</p>
+                <p class="info-row-value">무료 주차 150대</p>
+                <p class="info-row-sub">꽃시장 지하 및 지상 주차장</p>
+              </div>
+            </div>
+          </div>
+          <div class="info-btns">
+            <a href="https://m.booking.naver.com/booking/13/bizes/819206/items/4948017?area=bmp&lang=ko&service-target=map-pc&startDate=2026-05-18&theme=place"
+               target="_blank" class="btn btn-gold">예약하기</a>
+            <a href="http://map.naver.com/p/entry/place/1694854628" target="_blank"
+               class="btn btn-outline-lt" style="border-color:rgba(255,255,255,.3);">지도 열기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 예약 채널 ── -->
+<section class="page-sec page-sec--off">
+  <div class="wrap">
+    <div class="s-head s-head--c rv">
+      <div class="s-label s-label--c">Reservation Channels</div>
+      <h2 class="s-title">예약 방법 4가지</h2>
+      <p class="s-sub">편하신 방법으로 예약해 주세요. 예약 후 대기 없이 충분한 검사 시간이 배정됩니다.</p>
+    </div>
+    <div class="channel-grid rv">
+      <a href="https://m.booking.naver.com/booking/13/bizes/819206/items/4948017?area=bmp&lang=ko&service-target=map-pc&startDate=2026-05-18&theme=place"
+         target="_blank" class="channel-card naver">
+        <div class="channel-icon">N</div>
+        <div class="channel-name">네이버 예약</div>
+        <div class="channel-desc">날짜·시간 선택 후<br>즉시 예약 가능</div>
+      </a>
+      <a href="tel:05071439-0078" class="channel-card phone">
+        <div class="channel-icon">&#9742;</div>
+        <div class="channel-name">전화 예약</div>
+        <div class="channel-desc">0507-1439-0078<br>화~금 10:00~19:30 / 토~일 10:00~19:00</div>
+      </a>
+      <a href="https://talk.naver.com/ct/w5uyll?frm=pblog#nafullscreen" target="_blank" class="channel-card talk">
+        <div class="channel-icon">&#9670;</div>
+        <div class="channel-name">네이버 톡</div>
+        <div class="channel-desc">채팅으로 빠르게<br>예약·문의</div>
+      </a>
+      <a href="https://www.instagram.com/joseongin_glasses/" target="_blank" class="channel-card insta">
+        <div class="channel-icon">IG</div>
+        <div class="channel-name">인스타그램 DM</div>
+        <div class="channel-desc">@joseongin_glasses<br>DM 상담</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 영업시간 + FAQ ── -->
+<section class="page-sec">
+  <div class="wrap">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items:start;">
+      <!-- 영업시간 -->
+      <div class="rv">
+        <div class="s-label" style="margin-bottom:20px;">Business Hours</div>
+        <h2 class="s-title" style="font-size:1.6rem; margin-bottom:28px;">영업시간 안내</h2>
+        <table class="hours-table">
+          <thead>
+            <tr>
+              <th style="width:38%;">요일</th>
+              <th>영업시간</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="hours-closed">월요일</span></td>
+              <td><span class="hours-closed">정기 휴무</span></td>
+            </tr>
+            <tr><td>화요일</td><td>10:00 — 19:30</td></tr>
+            <tr><td>수요일</td><td>10:00 — 19:30</td></tr>
+            <tr><td>목요일</td><td>10:00 — 19:30</td></tr>
+            <tr><td>금요일</td><td>10:00 — 19:30</td></tr>
+            <tr><td>토요일</td><td>10:00 — 19:00</td></tr>
+            <tr><td>일요일</td><td>10:00 — 19:00</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:14px; font-size:.82rem; color:var(--sub);">
+          &#9670; 마지막 접수는 마감 30분 전까지 가능합니다.
+        </p>
+      </div>
+
+      <!-- FAQ -->
+      <div class="rv d1">
+        <div class="s-label" style="margin-bottom:20px;">FAQ</div>
+        <h2 class="s-title" style="font-size:1.6rem; margin-bottom:28px;">자주 묻는 질문</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              예약 없이 방문해도 되나요?
+              <span class="faq-toggle">&#9660;</span>
+            </div>
+            <div class="faq-a">방문은 가능하지만, 정밀 검안에는 충분한 시간이 필요합니다. 누진다초점·고도수 처방이 필요하신 경우에는 예약 후 방문하시면 대기 없이 충분한 시간을 배정받으실 수 있습니다.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              검안 시간은 얼마나 걸리나요?
+              <span class="faq-toggle">&#9660;</span>
+            </div>
+            <div class="faq-a">일반 도수 확인은 30~40분, 정밀 검안(ZEISS 웨이브프론트 + 양안시 기능 검사)은 약 60~90분이 소요됩니다. 누진다초점 첫 처방은 트라이얼 체험 포함 최대 2시간 정도 걸릴 수 있습니다.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              안경 제작 기간은 어떻게 되나요?
+              <span class="faq-toggle">&#9660;</span>
+            </div>
+            <div class="faq-a">일반 단초점 안경은 당일~2일, ZEISS 개인 맞춤 설계 렌즈는 5~7 영업일, 고도수·특수 렌즈는 1~2주가 소요될 수 있습니다. 접수 시 정확한 일정을 안내해 드립니다.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              다른 안경원에서 만든 안경 피팅도 가능한가요?
+              <span class="faq-toggle">&#9660;</span>
+            </div>
+            <div class="faq-a">네, 가능합니다. 코받침 조정, 다리 조정, 광학중심 확인 등 피팅 서비스를 제공합니다. 누진안경 부적응으로 불편하신 경우에도 상담 후 원인 파악을 도와드립니다.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              어린이 시력 검사도 가능한가요?
+              <span class="faq-toggle">&#9660;</span>
+            </div>
+            <div class="faq-a">만 5세 이상 어린이의 시력검사와 근시 억제 처방을 전문으로 합니다. 협조가 어려운 경우에도 전문적인 검사 기법으로 신뢰도 높은 처방을 제공합니다. 초진 어린이는 보호자와 함께 예약해 주세요.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="page-sec page-sec--dark" style="text-align:center;">
+  <div class="wrap rv">
+    <p class="s-label s-label--c s-label--lt" style="margin-bottom:16px;">Visit Us</p>
+    <h2 class="s-title s-title--lt" style="font-size:clamp(1.7rem,2.8vw,2.4rem);">대전 둔산에서 만나요</h2>
+    <p class="s-sub s-sub--lt" style="margin: 16px auto 36px; max-width:480px;">
+      대전 서구 둔산북로 22, 153&#183;154호 (둔산동 꽃시장 1층)<br>
+      0507-1439-0078 &nbsp;|&nbsp; 월요일 정기 휴무 &nbsp;|&nbsp; 토&#8211;일 19:00 마감
+    </p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://m.booking.naver.com/booking/13/bizes/819206/items/4948017?area=bmp&lang=ko&service-target=map-pc&startDate=2026-05-18&theme=place"
+         target="_blank" class="btn btn-gold">예약하기</a>
+      <a href="http://map.naver.com/p/entry/place/1694854628" target="_blank"
+         class="btn btn-outline-lt">네이버지도 길찾기</a>
+    </div>
+  </div>
+</section>
+
+<script>
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+<script src="js/components.js"></script>
+<script src="js/common.js"></script>
+</body>
+</html>

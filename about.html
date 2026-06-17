@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>안경사 소개 — 조성인 안경원</title>
+<meta name="description" content="20년 임상 경력, 보건대학교 특강 교수, 옵토메트리스트 3기, 피팅 마스터 수료. 안경사 조성인을 소개합니다."/>
+<link rel="icon" href="favicon.ico"/>
+<link rel="stylesheet" href="css/common.css"/>
+<style>
+/* ── Profile Section ── */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 72px;
+  align-items: start;
+}
+.profile-img-wrap { position: relative; }
+.profile-img-main {
+  border-radius: var(--rl);
+  overflow: hidden;
+  box-shadow: var(--sh-m);
+}
+.profile-img-main img {
+  width: 100%; aspect-ratio: 3/4;
+  object-fit: cover; object-position: center 8%;
+  display: block;
+}
+/* ── 20Years badge — 이미지 아래 분리 배치 (겹침 방지) ── */
+.profile-img-badge {
+  display: flex; gap: 24px; align-items: stretch;
+  margin-top: 16px;
+  background: var(--navy); border-radius: var(--r);
+  padding: 18px 24px;
+}
+.profile-badge-item { display: flex; flex-direction: column; align-items: center; flex: 1; }
+.profile-badge-num {
+  font-size: 2.4rem; font-weight: 900;
+  color: var(--gold-l); line-height: 1;
+  letter-spacing: -.04em;
+}
+.profile-badge-unit {
+  font-size: .68rem; font-weight: 700;
+  color: rgba(255,255,255,.5);
+  letter-spacing: .1em; text-transform: uppercase;
+  margin-top: 4px;
+}
+.profile-badge-divider {
+  width: 1px; background: rgba(255,255,255,.12); align-self: stretch;
+}
+.profile-quote {
+  margin-top: 20px;
+  border-left: 3px solid var(--gold);
+  padding: 16px 20px;
+  background: var(--off);
+  border-radius: 0 var(--r) var(--r) 0;
+}
+.profile-quote p {
+  font-size: .9rem; color: var(--sub); line-height: 1.8;
+  font-style: italic; word-break: keep-all;
+}
+
+/* ── Credentials ── */
+.cred-block { margin-bottom: 32px; }
+.cred-block-title {
+  font-size: .72rem; font-weight: 700;
+  color: var(--gold); letter-spacing: .14em; text-transform: uppercase;
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--bdr);
+}
+.cred-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 16px 18px; margin-bottom: 10px;
+  border: 1px solid var(--bdr); border-radius: var(--r);
+  transition: var(--tr);
+}
+.cred-item:hover { border-color: var(--navy); background: var(--navy-pale); transform: translateX(4px); }
+.cred-mark {
+  width: 40px; height: 40px; background: var(--g50);
+  border-radius: 9px; display: flex; align-items: center;
+  justify-content: center; flex-shrink: 0; font-size: 1rem;
+  font-weight: 900; color: var(--navy); line-height: 1;
+}
+.cred-item h4 { font-size: .88rem; font-weight: 800; color: var(--navy); margin-bottom: 3px; }
+.cred-item p { font-size: .8rem; color: var(--sub); line-height: 1.65; word-break: keep-all; }
+
+/* ── Lecture Section ── */
+.lecture-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px; align-items: center;
+}
+.lecture-imgs {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.lecture-img {
+  border-radius: var(--r); overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.lecture-img img {
+  width: 100%; aspect-ratio: 4/3;
+  object-fit: cover; object-position: center 20%; display: block;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+.lecture-img:hover img {
+  transform: scale(1.06);
+}
+.lecture-img::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(11,31,58,.58) 0%,
+    rgba(11,31,58,.12) 52%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+.lecture-img:hover::after { opacity: 1; }
+.lecture-img-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 14px 16px;
+  color: #fff; font-size: .78rem; font-weight: 600;
+  letter-spacing: .01em; line-height: 1.4;
+  transform: translateY(8px); opacity: 0;
+  transition: transform .35s ease, opacity .35s ease;
+  z-index: 1; pointer-events: none;
+  word-break: keep-all;
+}
+.lecture-img:hover .lecture-img-caption {
+  transform: translateY(0); opacity: 1;
+}
+.lecture-img:first-child { grid-column: span 2; }
+.lecture-body {}
+.lecture-body .s-sub { margin-bottom: 20px; }
+.lecture-point {
+  display: flex; flex-direction: column; gap: 14px; margin-top: 24px;
+}
+.lp {
+  display: flex; gap: 13px; align-items: flex-start;
+  padding: 16px; background: var(--off);
+  border-radius: var(--r); border-left: 3px solid var(--navy);
+}
+.lp-mark { font-size: .8rem; font-weight: 900; color: var(--navy); min-width: 18px; margin-top: 1px; }
+.lp h4 { font-size: .87rem; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+.lp p { font-size: .8rem; color: var(--sub); line-height: 1.7; word-break: keep-all; }
+
+/* ── Philosophy ── */
+.phil-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.phil-card {
+  background: #fff; border: 1px solid var(--bdr);
+  border-radius: var(--rl); padding: 36px 28px;
+  transition: var(--tr);
+}
+.phil-card:hover { box-shadow: var(--sh-m); transform: translateY(-4px); }
+.phil-num { font-size: .63rem; font-weight: 700; color: var(--gold); letter-spacing: .14em; margin-bottom: 12px; display: block; }
+.phil-mark { font-size: 1.6rem; color: var(--navy); display: block; margin-bottom: 14px; }
+.phil-card h3 { font-size: .97rem; font-weight: 800; color: var(--navy); margin-bottom: 10px; line-height: 1.4; word-break: keep-all; }
+.phil-card p { font-size: .83rem; color: var(--sub); line-height: 1.82; word-break: keep-all; }
+
+/* ── Timeline ── */
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before {
+  content: ''; position: absolute; left: 6px; top: 0; bottom: 0;
+  width: 2px; background: var(--bdr);
+}
+.tl-item { position: relative; margin-bottom: 32px; }
+.tl-item::before {
+  content: ''; position: absolute;
+  left: -26px; top: 6px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--navy); border: 2px solid #fff;
+  box-shadow: 0 0 0 2px var(--navy);
+}
+.tl-year { font-size: .72rem; font-weight: 700; color: var(--gold); letter-spacing: .08em; margin-bottom: 5px; }
+.tl-title { font-size: .95rem; font-weight: 800; color: var(--navy); margin-bottom: 4px; word-break: keep-all; }
+.tl-desc { font-size: .82rem; color: var(--sub); line-height: 1.7; word-break: keep-all; }
+
+@media (max-width: 960px) {
+  .profile-grid { grid-template-columns: 1fr; gap: 40px; }
+  .profile-img-main img { aspect-ratio: 4/3; object-position: center 10%; }
+  .lecture-grid { grid-template-columns: 1fr; }
+  .phil-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .phil-grid { grid-template-columns: 1fr; }
+  .lecture-imgs { grid-template-columns: 1fr; }
+  .lecture-img:first-child { grid-column: span 1; }
+}
+</style>
+</head>
+<body>
+<div id="ticker-slot"></div>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="wrap page-hero-inner rv">
+    <div class="page-hero-tag">About</div>
+    <h1 class="page-hero-title">안경사 조성인 소개</h1>
+    <p class="page-hero-sub">20년간 오직 한 가지, 정확하고 편안한 안경만을 연구해온 임상 전문가입니다.</p>
+  </div>
+</section>
+
+<!-- ── 프로필 ── -->
+<section class="page-sec page-sec--lg">
+  <div class="wrap">
+    <div class="profile-grid">
+      <div class="profile-img-wrap rv">
+        <div class="profile-img-main">
+          <img src="img/hero-bg.jpg" alt="안경사 조성인"/>
+        </div>
+        <div class="profile-img-badge">
+          <div class="profile-badge-item">
+            <span class="profile-badge-num">20</span>
+            <span class="profile-badge-unit">Years Clinical</span>
+          </div>
+          <div class="profile-badge-divider"></div>
+          <div class="profile-badge-item">
+            <span class="profile-badge-num">6K<span style="font-size:1.2rem;">+</span></span>
+            <span class="profile-badge-unit">Progressive Cases</span>
+          </div>
+          <div class="profile-badge-divider"></div>
+          <div class="profile-badge-item">
+            <span class="profile-badge-num" style="font-size:1.4rem;">Prof.</span>
+            <span class="profile-badge-unit">Univ. Lecturer</span>
+          </div>
+        </div>
+        <div class="profile-quote">
+          <p>"안경을 맞추고 나서도 불편했던 적이 있으시다면, 그건 안경의 문제가 아니라 검안의 문제입니다. 저는 처방 하나하나에 20년의 임상 경험을 담습니다."</p>
+        </div>
+      </div>
+      <div>
+        <div class="s-label rv">전문 자격 &amp; 경력</div>
+        <h2 class="s-title rv d1">조성인 안경사</h2>
+        <p class="s-sub rv d1" style="margin-bottom:32px; word-break:keep-all;">보건대학교 특강 교수로 활동하며 미래의 안경사들에게 임상 지식을 전수하는 동시에, 안경원에서는 고객 한 분 한 분에게 그 전문성을 그대로 적용합니다.</p>
+
+        <div class="cred-block rv d2">
+          <div class="cred-block-title">학력 &amp; 교육</div>
+          <div class="cred-item">
+            <div class="cred-mark">&#9670;</div>
+            <div>
+              <h4>보건대학교 안경광학과 특강 교수</h4>
+              <p>누진다초점 렌즈 처방·설계, 정밀검안 기법을 안경광학과 학생들에게 강의. 최신 임상 사례와 검안 이론을 접목한 실무 중심 교육을 담당하고 있습니다.</p>
+            </div>
+          </div>
+          <div class="cred-item">
+            <div class="cred-mark">&#9651;</div>
+            <div>
+              <h4>옵토메트리스트 3기 교육 이수</h4>
+              <p>국제 기준의 시기능 검사 전문 과정. 단순 굴절 검사를 넘어, 양안시 기능·조절력·폭주력까지 통합적으로 평가하는 체계적 검안 능력을 갖추었습니다.</p>
+            </div>
+          </div>
+          <div class="cred-item">
+            <div class="cred-mark">&#9711;</div>
+            <div>
+              <h4>피팅 마스터 과정 수료</h4>
+              <p>단순 착용감을 넘어 광학 성능까지 고려하는 정밀 피팅 전문 과정 수료. 프레임별 광학 중심 최적화, 부등상 교정 피팅 등 고급 기술을 보유하고 있습니다.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cred-block rv d2">
+          <div class="cred-block-title">전문 역량</div>
+          <div class="cred-item">
+            <div class="cred-mark">I</div>
+            <div>
+              <h4>양안개방검사 (Binocular Open Refraction)</h4>
+              <p>폐안식 검사와 달리, 두 눈을 동시에 개방한 상태에서 실제 생활 환경과 가장 유사한 조건으로 굴절 검사를 수행합니다. 사위, 조절 과부하 등 폐안식 검사에서 놓치기 쉬운 요소까지 정밀하게 평가합니다.</p>
+            </div>
+          </div>
+          <div class="cred-item">
+            <div class="cred-mark">II</div>
+            <div>
+              <h4>누진다초점 전문 처방 — 20년, 6천 건 이상</h4>
+              <p>가장 까다로운 렌즈로 알려진 누진다초점을 20년간 6,000건 이상 처방·제작한 풍부한 임상 경험. 라이프스타일별·직업별 맞춤 누진 설계를 제공합니다.</p>
+            </div>
+          </div>
+          <div class="cred-item">
+            <div class="cred-mark">III</div>
+            <div>
+              <h4>성장기 근시 진행 억제 전문</h4>
+              <p>어린이·청소년의 근시 진행을 늦추는 마이오피 컨트롤 렌즈 처방 전문가. 브랜드별 억제 렌즈를 보유하고, 정기 시력 모니터링을 통해 지속적으로 관리합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 강의 활동 ── -->
+<section class="page-sec page-sec--off">
+  <div class="wrap">
+    <div class="lecture-grid">
+      <div class="lecture-imgs rv">
+        <div class="lecture-img">
+          <img src="img/about-lecture1.jpg" alt="핵심 디자인 영역 강의 장면"/>
+          <span class="lecture-img-caption">핵심 디자인 영역 — Distance &amp; Progressive Zone 디자인 강의</span>
+        </div>
+        <div class="lecture-img">
+          <img src="img/about-lecture2.jpg" alt="주변부 왔곡 현상 강의 장면"/>
+          <span class="lecture-img-caption">주변부 왔곡 — Peripheral Distortion 강의</span>
+        </div>
+      </div>
+      <div class="lecture-body rv d1">
+        <div class="s-label">Teaching Activity</div>
+        <h2 class="s-title">보건대학교<br>안경광학과 특강 교수</h2>
+        <p class="s-sub" style="margin-bottom:0; word-break:keep-all;">미래의 안경사를 교육하는 특강 교수로서, 최신 임상 사례와 검안 이론을 실무에 접목한 강의를 진행합니다. 안경원 고객에게 제공하는 서비스의 질은 바로 이 강의 수준에서 출발합니다.</p>
+        <div class="lecture-point">
+          <div class="lp">
+            <span class="lp-mark">&#9670;</span>
+            <div>
+              <h4>누진다초점 렌즈 설계 및 처방 실습</h4>
+              <p>학생들에게 누진다초점 렌즈의 원리, 설계 방식, 실제 처방 절차를 체계적으로 가르칩니다. 이론과 임상 케이스를 병행하는 실무 중심 교육입니다.</p>
+            </div>
+          </div>
+          <div class="lp">
+            <span class="lp-mark">&#9651;</span>
+            <div>
+              <h4>정밀검안 기법 — 양안시 분석 포함</h4>
+              <p>단순 시력 검사를 넘어, 양안시 기능 전반을 평가하는 고급 검안 기법을 강의합니다. 사위, 조절 이상, 폭주 부족 등 복잡한 케이스 처리 능력을 교육합니다.</p>
+            </div>
+          </div>
+          <div class="lp">
+            <span class="lp-mark">&#9711;</span>
+            <div>
+              <h4>임상 케이스 리뷰 및 문제 해결 토론</h4>
+              <p>실제 안경원에서 발생하는 다양한 케이스를 분석하고, 최적의 해결책을 토론하는 방식으로 미래 안경사들의 임상 판단력을 키웁니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 검안 철학 ── */
+<section class="page-sec">
+  <div class="wrap">
+    <div class="s-head s-head--c rv">
+      <div class="s-label s-label--c">Clinical Philosophy</div>
+      <h2 class="s-title">조성인 안경원의 검안 철학</h2>
+      <p class="s-sub">20년의 임상 경험에서 얻은 세 가지 핵심 원칙</p>
+    </div>
+    <div class="phil-grid">
+      <div class="phil-card rv">
+        <span class="phil-num">01</span>
+        <b class="phil-mark">&#9670;</b>
+        <h3>데이터 기반 처방</h3>
+        <p>막연한 경험이 아닌, ZEISS 아이프로파일러의 정밀 측정 데이터를 기반으로 처방합니다. 웨이브프론트 수차, 각막 지형도, 동공 크기 변화 등 객관적 수치를 모두 검토한 후 최적 처방을 결정합니다.</p>
+      </div>
+      <div class="phil-card rv d1">
+        <span class="phil-num">02</span>
+        <b class="phil-mark">&#9651;</b>
+        <h3>생활 환경 맞춤 설계</h3>
+        <p>안경은 검사실이 아닌 일상에서 쓰입니다. 직업, 주요 작업 거리, 취미, 생활 패턴을 상세히 문진하여 고객의 실제 생활 환경에서 가장 편안한 시각 솔루션을 설계합니다.</p>
+      </div>
+      <div class="phil-card rv d2">
+        <span class="phil-num">03</span>
+        <b class="phil-mark">&#9711;</b>
+        <h3>체험 후 결정하는 투명한 처방</h3>
+        <p>처방 근거를 고객과 함께 확인하고, 렌즈도 직접 착용해보고 결정합니다. 안경사의 일방적 권유가 아닌, 고객이 직접 체감하고 납득한 후 선택하는 투명한 처방 과정을 지향합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 경력 타임라인 ── -->
+<section class="page-sec page-sec--g50">
+  <div class="wrap">
+    <div class="s-head rv">
+      <div class="s-label">Career Timeline</div>
+      <h2 class="s-title">주요 경력</h2>
+    </div>
+    <div style="max-width:620px;">
+      <div class="timeline">
+        <div class="tl-item rv">
+          <div class="tl-year">2005 — 현재</div>
+          <div class="tl-title">조성인 안경원 운영 (대전 서구 둔산동)</div>
+          <div class="tl-desc">20년간 대전 서구 지역에서 임상 안경원을 운영하며 고도수·누진다초점·안질환 케어 안경 제작 전문 역량을 지속적으로 축적.</div>
+        </div>
+        <div class="tl-item rv d1">
+          <div class="tl-year">현재</div>
+          <div class="tl-title">보건대학교 안경광학과 특강 교수</div>
+          <div class="tl-desc">누진다초점 렌즈 설계·처방 및 정밀검안 기법을 안경광학과 학생들에게 강의. 이론과 실무를 통합한 임상 중심 교육 담당.</div>
+        </div>
+        <div class="tl-item rv d2">
+          <div class="tl-year">이수 완료</div>
+          <div class="tl-title">옵토메트리스트 3기 교육 이수</div>
+          <div class="tl-desc">국제 수준의 시기능 검사 전문 교육. 양안시 기능 분석, 조절·폭주 평가, 저시력 케어 등 고급 검안 역량 체계적 습득.</div>
+        </div>
+        <div class="tl-item rv d3">
+          <div class="tl-year">이수 완료</div>
+          <div class="tl-title">피팅 마스터 과정 수료</div>
+          <div class="tl-desc">광학 성능 중심 정밀 피팅 전문 과정. 착용감·미관·광학 성능 세 가지를 동시에 최적화하는 마스터 피팅 기술 수료.</div>
+        </div>
+        <div class="tl-item rv d4">
+          <div class="tl-year">누적 6,000건+</div>
+          <div class="tl-title">누진다초점 렌즈 처방·제작</div>
+          <div class="tl-desc">20년간 6,000건 이상의 누진다초점 렌즈 처방 경력. 라이프스타일별·직업별 맞춤 누진 설계와 브랜드별 체험 비교 시스템 운영.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<div style="background:var(--navy);padding:64px 0;text-align:center;">
+  <div class="wrap rv">
+    <p style="font-size:.72rem;font-weight:700;letter-spacing:.16em;color:var(--gold-l);margin-bottom:14px;">RESERVATION</p>
+    <h2 style="font-size:clamp(1.6rem,2.6vw,2.2rem);font-weight:900;color:#fff;letter-spacing:-.03em;margin-bottom:12px;word-break:keep-all;">조성인 안경사에게 직접 검안받아 보세요</h2>
+    <p style="font-size:.95rem;color:rgba(255,255,255,.58);line-height:1.8;margin-bottom:28px;word-break:keep-all;">충분한 검사 시간 확보를 위해 예약제로 운영됩니다.</p>
+    <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
+      <a href="https://m.booking.naver.com/booking/13/bizes/819206/items/4948017?area=bmp&lang=ko&service-target=map-pc&startDate=2026-05-18&theme=place" target="_blank" class="btn btn-gold">예약하기</a>
+      <a href="contact.html" class="btn btn-outline-lt">오시는 길 보기</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/components.js"></script>
+<script src="js/common.js"></script>
+</body>
+</html>

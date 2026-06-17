@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Case Studies — 조성인 안경원</title>
+<meta name="description" content="누진다초점, 고도수, 어린이 근시, 프리즘 교정 등 조성인 안경원의 실제 제작·처방 사례를 소개합니다."/>
+<link rel="icon" href="favicon.ico"/>
+<link rel="stylesheet" href="css/common.css"/>
+<style>
+/* ── Case List ── */
+.case-list { display: flex; flex-direction: column; gap: 0; }
+
+.case-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--bdr);
+  transition: var(--tr);
+}
+.case-item:first-child { border-top: 1px solid var(--bdr); }
+.case-item:hover { background: var(--off); }
+
+.case-item-body {
+  padding: 52px 56px 52px var(--px);
+  display: flex; flex-direction: column; justify-content: center; gap: 16px;
+}
+.case-item:nth-child(even) .case-item-body { order: 2; padding: 52px var(--px) 52px 56px; }
+.case-item:nth-child(even) .case-item-visual { order: 1; }
+
+.case-num {
+  font-size: .68rem; font-weight: 700;
+  color: var(--gold); letter-spacing: .18em; text-transform: uppercase;
+}
+.case-category {
+  font-size: .76rem; font-weight: 700;
+  color: var(--g400); letter-spacing: .1em; text-transform: uppercase;
+}
+.case-title {
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 800; color: var(--navy);
+  line-height: 1.35; word-break: keep-all;
+}
+.case-summary {
+  font-size: 1rem; color: var(--sub);
+  line-height: 1.9; word-break: keep-all;
+  max-width: 480px;
+}
+.case-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.case-tag {
+  display: inline-block; padding: 5px 14px;
+  background: var(--g50); border: 1px solid var(--bdr);
+  border-radius: 20px; font-size: .78rem; color: var(--g800);
+  font-weight: 500; word-break: keep-all;
+}
+.case-link {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: .88rem; font-weight: 700; color: var(--navy);
+  border-bottom: 1.5px solid var(--gold); padding-bottom: 2px;
+  align-self: flex-start; transition: color .2s;
+}
+.case-link:hover { color: var(--gold-d); }
+
+.case-item-visual {
+  background: var(--g50);
+  display: flex; align-items: center; justify-content: center;
+  min-height: 340px; position: relative; overflow: hidden;
+}
+.case-item-visual img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+/* 이미지 없는 경우 — 번호 표시 */
+.case-visual-placeholder {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; width: 100%; height: 100%; min-height: 340px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+}
+.case-visual-num {
+  font-size: 6rem; font-weight: 900;
+  color: rgba(255,255,255,.07); line-height: 1;
+  letter-spacing: -.06em;
+}
+.case-visual-label {
+  font-size: .7rem; font-weight: 700;
+  color: var(--gold-l); letter-spacing: .18em; text-transform: uppercase;
+}
+
+/* ── Blog CTA ── */
+.blog-cta {
+  background: var(--navy);
+  border-radius: var(--rl);
+  padding: 52px 60px;
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
+  flex-wrap: wrap;
+}
+.blog-cta-text h3 {
+  font-size: 1.5rem; font-weight: 800; color: #fff;
+  margin-bottom: 8px; word-break: keep-all; letter-spacing: -.03em;
+}
+.blog-cta-text p { font-size: .97rem; color: rgba(255,255,255,.58); word-break: keep-all; line-height: 1.8; }
+
+/* ── Stats ── */
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.stat-item {
+  background: var(--navy); padding: 48px 40px; text-align: center;
+}
+.stat-item:first-child { border-radius: var(--rl) 0 0 var(--rl); }
+.stat-item:last-child  { border-radius: 0 var(--rl) var(--rl) 0; }
+.stat-num {
+  font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 900;
+  color: #fff; line-height: 1; letter-spacing: -.05em;
+  margin-bottom: 12px;
+}
+.stat-num sup { font-size: 1.2rem; color: var(--gold-l); vertical-align: super; }
+.stat-label { font-size: .88rem; color: rgba(255,255,255,.5); word-break: keep-all; line-height: 1.6; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .case-item { grid-template-columns: 1fr; }
+  .case-item-body,
+  .case-item:nth-child(even) .case-item-body { padding: 40px var(--px); order: 2; }
+  .case-item:nth-child(even) .case-item-visual { order: 1; }
+  .case-item-visual { min-height: 240px; }
+  .case-visual-placeholder { min-height: 240px; }
+  .stats-grid { grid-template-columns: 1fr; gap: 2px; }
+  .stat-item:first-child { border-radius: var(--rl) var(--rl) 0 0; }
+  .stat-item:last-child  { border-radius: 0 0 var(--rl) var(--rl); }
+  .blog-cta { padding: 36px 28px; flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 600px) {
+  .case-item-body { padding: 32px var(--px); }
+  .case-title { font-size: 1.2rem; }
+}
+</style>
+</head>
+<body>
+<div id="ticker-slot"></div>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="wrap page-hero-inner rv">
+    <div class="page-hero-tag">Case Studies</div>
+    <h1 class="page-hero-title">제작 사례</h1>
+    <p class="page-hero-sub">
+      실제 고객의 불편 사항을 어떻게 해결했는지,<br>
+      검사·처방·제작의 전 과정을 투명하게 공유합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ── Stats ── -->
+<section class="page-sec page-sec--off" style="padding: 56px 0;">
+  <div class="wrap">
+    <div class="stats-grid rv">
+      <div class="stat-item">
+        <div class="stat-num">20<sup>yr</sup></div>
+        <p class="stat-label">누진다초점 전문<br>임상 경력</p>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6K<sup>+</sup></div>
+        <p class="stat-label">누진다초점<br>처방·제작 누계</p>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1<sup>:1</sup></div>
+        <p class="stat-label">안경사 직접<br>문진·검안·피팅</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Case List ── -->
+<section class="page-sec" style="padding-top: 0; padding-bottom: 0;">
+  <div class="case-list">
+
+    <!-- Case 01 -->
+    <div class="case-item rv">
+      <div class="case-item-body">
+        <div style="display:flex; gap:14px; align-items:center;">
+          <span class="case-num">Case 01</span>
+          <span class="case-category">Progressive Lens</span>
+        </div>
+        <h2 class="case-title">
+          오후만 되면 눈이 무겁고 피곤한 60대,<br>
+          3번의 재도전 끝에 찾은 편안한 누진안경
+        </h2>
+        <p class="case-summary">
+          PC 작업이 많은 60대 남성 고객. 기존 다초점 안경으로 오후마다 눈 피로와 어지러움이 심해 대전 가장동에서 둔산동까지 찾아오셨습니다. 처음엔 오피스 렌즈로 시작했지만 고객 요청으로 누진다초점으로 전환, 이후 ZEISS 아이프로파일러 재검사에서 누진 호환성 문제를 발견해 세이코 CV-X 1.60 12mm로 교체했습니다. 기존 단순 도수(-1.25)에서 난시 성분(-0.25 × 80)을 추가 교정하는 정밀 재검안도 병행했고, 세 번의 도전 끝에 흔들림 없이 선명하게 보이는 안경을 완성했습니다.
+        </p>
+        <div class="case-tags">
+          <span class="case-tag">누진 브랜드 호환성 분석</span>
+          <span class="case-tag">세이코 CV-X</span>
+          <span class="case-tag">ZEISS 아이프로파일러</span>
+          <span class="case-tag">20일 렌즈 교환 서비스</span>
+        </div>
+        <a href="https://blog.naver.com/pildo11/224142508935" target="_blank" class="case-link">
+          블로그에서 자세히 보기 &#8594;
+        </a>
+      </div>
+      <div class="case-item-visual">
+        <div class="case-visual-placeholder">
+          <div class="case-visual-num">01</div>
+          <div class="case-visual-label">Progressive Lens</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 02 -->
+    <div class="case-item rv">
+      <div class="case-item-body">
+        <div style="display:flex; gap:14px; align-items:center;">
+          <span class="case-num">Case 02</span>
+          <span class="case-category">High Power · 초고도근시</span>
+        </div>
+        <h2 class="case-title">
+          양안 합도수 &#8722;9.75D 초고도근시,<br>
+          &ldquo;안경 쓰면 눈이 너무 작아 보여요&rdquo;
+        </h2>
+        <p class="case-summary">
+          맨눈 시력 0.02의 33세 여성 고객. 기존 안경(교정시력 0.8)의 두께와 눈 작아 보임을 개선하고 싶다는 요청으로 방문하셨습니다. ZEISS 아이프로파일러 + 양안 개방 검사로 난시 성분을 정밀 재측정해 교정시력을 1.0으로 끌어올렸습니다. 핵심은 프레임 선택—단순히 작은 테가 아닌, 고객 PD(69mm)에 맞춰 아이림 크기·브릿지 사이즈·경첩 길이를 종합 계산해 피오비노 KN 850으로 선정했습니다. 1.74 굴절률 청광 렌즈와 에실로 아이룰러 2 정밀 계측으로 광학중심을 동공에 정확히 맞춰, 지금까지 쓴 것 중 눈이 가장 덜 작아 보이는 안경을 완성했습니다.
+        </p>
+        <div class="case-tags">
+          <span class="case-tag">양안 개방 정밀 검안</span>
+          <span class="case-tag">PD-브릿지 정합 설계</span>
+          <span class="case-tag">1.74 굴절률</span>
+          <span class="case-tag">광학중심 동공 정렬</span>
+        </div>
+        <a href="https://blog.naver.com/pildo11/224162850609" target="_blank" class="case-link">
+          블로그에서 자세히 보기 &#8594;
+        </a>
+      </div>
+      <div class="case-item-visual">
+        <div class="case-visual-placeholder">
+          <div class="case-visual-num">02</div>
+          <div class="case-visual-label">High Power</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 03 -->
+    <div class="case-item rv">
+      <div class="case-item-body">
+        <div style="display:flex; gap:14px; align-items:center;">
+          <span class="case-num">Case 03</span>
+          <span class="case-category">Eye Care</span>
+        </div>
+        <h2 class="case-title">
+          황반변성·백내장·녹내장 동반,<br>
+          눈부심 억제 특수 렌즈 처방
+        </h2>
+        <p class="case-summary">
+          70대 환자. 황반변성과 백내장 수술 후 잔여 굴절 오차, 녹내장 시야 결손을 함께 고려해야 하는 복합 케이스였습니다. 편광·선택적 차광 기능을 갖춘 특수 렌즈와 광학 중심 최적화로 눈부심을 최소화하고 잔존 시야를 최대한 활용하는 안경을 처방했습니다.
+        </p>
+        <div class="case-tags">
+          <span class="case-tag">안질환 동반 처방</span>
+          <span class="case-tag">선택적 차광 렌즈</span>
+          <span class="case-tag">저시력 케어</span>
+        </div>
+        <a href="https://blog.naver.com/pildo11/224087622826" target="_blank" class="case-link">
+          블로그에서 자세히 보기 &#8594;
+        </a>
+      </div>
+      <div class="case-item-visual">
+        <div class="case-visual-placeholder">
+          <div class="case-visual-num">03</div>
+          <div class="case-visual-label">Eye Care</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 04 -->
+    <div class="case-item rv">
+      <div class="case-item-body">
+        <div style="display:flex; gap:14px; align-items:center;">
+          <span class="case-num">Case 04</span>
+          <span class="case-category">Myopia Control · 성장기 근시 억제</span>
+        </div>
+        <h2 class="case-title">
+          &ldquo;안경 쓰면 눈 나빠진다&rdquo;는 오해로<br>
+          관리 시기 놓친 초등 4학년, 2년간의 기록
+        </h2>
+        <p class="case-summary">
+          23년 9월 양안 -1.75로 첫 안경을 맞추셨으나, &ldquo;안경 쓰면 눈 나빠진다&rdquo;는 오해로 착용을 거르시다가 9개월 만에 -3.50까지 빠르게 진행된 어린이 사례입니다. 그 후 꾸준한 안경 착용과 호야 마이오스마트 렌즈로 진행 속도를 늦추다가, 26년 재검사에서 근시는 거의 안정(-0.25D)되고 난시만 변화가 있는 상태로 확인되었습니다. 이번엔 자이스 마이오케어 S로 교체했는데, &ldquo;1년 내 1단계 변화 시 무상 교체&rdquo; 보증 프로그램이 성장기 도수 변화 주기에 더 적합했기 때문입니다. 에실로 아이룰러 2로 0.01mm 단위 정밀 계측, 3개월마다 피팅 점검으로 지속 관리 중입니다.
+        </p>
+        <div class="case-tags">
+          <span class="case-tag">자이스 마이오케어 S</span>
+          <span class="case-tag">올케어 무상교체 프로그램</span>
+          <span class="case-tag">2년간 시력 변화 기록</span>
+          <span class="case-tag">3개월 주기 피팅 관리</span>
+        </div>
+        <a href="https://blog.naver.com/pildo11/224174334757" target="_blank" class="case-link">
+          블로그에서 자세히 보기 &#8594;
+        </a>
+      </div>
+      <div class="case-item-visual">
+        <div class="case-visual-placeholder">
+          <div class="case-visual-num">04</div>
+          <div class="case-visual-label">Myopia Control</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 05 -->
+    <div class="case-item rv">
+      <div class="case-item-body">
+        <div style="display:flex; gap:14px; align-items:center;">
+          <span class="case-num">Case 05</span>
+          <span class="case-category">Eye Care · 초고도근시 + 백내장</span>
+        </div>
+        <h2 class="case-title">
+          새로 맞춰도 낮엔 눈부시고 밤엔 번지는,<br>
+          원인은 도수가 아니었습니다
+        </h2>
+        <p class="case-summary">
+          &ldquo;돈만 쓰고 또 실패할까 봐 무서워요.&rdquo; 둔산동에서 방문한 70대 여성 고객. 백내장은 있지만 수술은 아직 이른 상태였고, 기존 안경으로는 낮에 눈부시고 밤에 빛번짐이 심해 일상이 불편한 상태였습니다. ZEISS 아이프로파일러로 고위수차와 동공 크기를 분석한 결과, &ldquo;흐리게 보이는 이유가 실은 도수 문제 + 난시 축 틀어짐 + 고위수차&rdquo;임을 데이터로 확인했습니다. 기존 -9.50에서 -11.00으로 도수를 재조정하고 난시도 재설정한 결과, 교정시력 0.3 → 0.8로 향상되고 빛번짐과 눈부심이 현저히 줄었습니다. &ldquo;어지러울까 봐 걱정했는데 전혀 없고, 훨씬 깨끗해요.&rdquo;
+        </p>
+        <div class="case-tags">
+          <span class="case-tag">고위수차 분석</span>
+          <span class="case-tag">도수 재조정 (-9.5 → -11.0)</span>
+          <span class="case-tag">백내장 동반 케어</span>
+          <span class="case-tag">빛번짐 개선</span>
+        </div>
+        <a href="https://blog.naver.com/pildo11/224282051030" target="_blank" class="case-link">
+          블로그에서 자세히 보기 &#8594;
+        </a>
+      </div>
+      <div class="case-item-visual">
+        <div class="case-visual-placeholder">
+          <div class="case-visual-num">05</div>
+          <div class="case-visual-label">Eye Care</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.case-list -->
+</section>
+
+<!-- ── Blog CTA ── -->
+<section class="page-sec page-sec--off">
+  <div class="wrap">
+    <div class="blog-cta rv">
+      <div class="blog-cta-text">
+        <h3>더 많은 사례는 블로그에서</h3>
+        <p>누진다초점·고도수·근시 관리 등 다양한 케이스를 상세히 기록하고 있습니다.</p>
+      </div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="https://blog.naver.com/pildo11" target="_blank" class="btn btn-gold">
+          네이버 블로그 보기 &#8594;
+        </a>
+        <a href="https://m.booking.naver.com/booking/13/bizes/819206/items/4948017?area=bmp&lang=ko&service-target=map-pc&startDate=2026-05-18&theme=place"
+           target="_blank" class="btn btn-outline-lt">
+          예약하기
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="js/components.js"></script>
+<script src="js/common.js"></script>
+</body>
+</html>

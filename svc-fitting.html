@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>맞춤형 피팅 — 조성인 안경원</title>
+<meta name="description" content="완성 안경이 얼굴에 정확히 맞는 그날까지. 3D 피팅 파라미터 측정, 코받침·다리 정밀 조형, 완성 후 재방문 관리까지 조성인 안경원의 맞춤형 피팅 서비스."/>
+<link rel="icon" href="favicon.ico"/>
+<link rel="stylesheet" href="css/common.css"/>
+<style>
+/* ── Hero ── */
+.svc-hero {
+  padding: calc(var(--nav-h) + 80px) 0 80px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
+  position: relative; overflow: hidden;
+}
+.svc-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(184,147,100,.12) 0%, transparent 60%);
+}
+.svc-hero-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px);
+  position: relative; z-index: 1; max-width: 840px;
+}
+.svc-hero-eyebrow {
+  font-size: .72rem; font-weight: 700; letter-spacing: .2em;
+  color: var(--gold-l); text-transform: uppercase; margin-bottom: 18px;
+}
+.svc-hero-title {
+  font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 900; color: #fff;
+  line-height: 1.2; letter-spacing: -.04em; margin-bottom: 22px; word-break: keep-all;
+}
+.svc-hero-title em { font-style: normal; color: var(--gold-l); }
+.svc-hero-desc {
+  font-size: 1.08rem; color: rgba(255,255,255,.72);
+  line-height: 1.9; word-break: keep-all; margin-bottom: 40px; max-width: 620px;
+}
+.hero-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+.hero-chip {
+  display: flex; align-items: center; gap: 8px; padding: 8px 18px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
+  border-radius: 30px; font-size: .82rem; color: rgba(255,255,255,.82); font-weight: 500;
+}
+.hero-chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+/* ── Breadcrumb ── */
+.breadcrumb {
+  padding: 16px 0; border-bottom: 1px solid var(--bdr); background: var(--off);
+}
+.breadcrumb-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px);
+  display: flex; align-items: center; gap: 8px; font-size: .82rem; color: var(--g400);
+}
+.breadcrumb-inner a { color: var(--g400); transition: color .2s; }
+.breadcrumb-inner a:hover { color: var(--navy); }
+.breadcrumb-inner span { color: var(--navy); font-weight: 600; }
+.breadcrumb-sep { color: var(--g200); }
+
+/* ── Why Fitting Matters ── */
+.why-split {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+}
+.why-visual {
+  border-radius: var(--rl); overflow: hidden;
+  background: var(--g50); aspect-ratio: 5/4; box-shadow: var(--sh-m);
+  display: flex; align-items: center; justify-content: center;
+}
+.why-visual svg { width: 120px; height: 120px; opacity: .1; }
+.why-label { font-size: .7rem; font-weight: 700; letter-spacing: .12em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; }
+.why-title { font-size: 1.9rem; font-weight: 900; color: var(--navy); line-height: 1.3; word-break: keep-all; margin-bottom: 18px; letter-spacing: -.04em; }
+.why-lead {
+  font-size: 1rem; color: var(--sub); line-height: 1.9; word-break: keep-all;
+  border-left: 3px solid var(--gold); padding-left: 18px; margin-bottom: 28px;
+}
+.why-list { display: flex; flex-direction: column; gap: 12px; }
+.why-list-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 14px; background: var(--off); border-radius: var(--r);
+  border-left: 3px solid transparent; transition: border-color .25s;
+}
+.why-list-item:hover { border-left-color: var(--gold); }
+.why-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--navy); color: var(--gold-l);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .72rem; font-weight: 800; flex-shrink: 0;
+}
+.why-item-title { font-size: .93rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; word-break: keep-all; }
+.why-item-desc { font-size: .87rem; color: var(--sub); line-height: 1.7; word-break: keep-all; }
+
+/* ── 3D Fitting Parameters ── */
+.param-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.param-card {
+  background: #fff; border-radius: var(--rl); padding: 32px 26px;
+  box-shadow: var(--sh-s); text-align: center;
+  border-bottom: 3px solid transparent;
+  transition: border-color .25s, transform .25s;
+}
+.param-card:hover { border-bottom-color: var(--gold); transform: translateY(-4px); }
+.param-num {
+  font-size: 1.8rem; font-weight: 900; color: var(--navy);
+  opacity: .12; line-height: 1; margin-bottom: 14px; letter-spacing: -.06em;
+}
+.param-en { font-size: .7rem; font-weight: 700; color: var(--gold); letter-spacing: .1em; margin-bottom: 8px; }
+.param-title { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 10px; word-break: keep-all; }
+.param-desc { font-size: .87rem; color: var(--sub); line-height: 1.75; word-break: keep-all; }
+
+/* ── Fitting Process ── */
+.fit-process {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  border-radius: var(--rl); overflow: hidden; box-shadow: var(--sh-m);
+}
+.fit-step {
+  padding: 36px 24px; background: #fff; text-align: center;
+  border-right: 1px solid var(--bdr); position: relative;
+  transition: background .25s;
+}
+.fit-step:last-child { border-right: none; }
+.fit-step:hover { background: var(--off); }
+.fit-step:nth-child(odd) { background: var(--off); }
+.fit-step:nth-child(odd):hover { background: var(--g100); }
+.fit-step-num {
+  font-size: 1.8rem; font-weight: 900; color: var(--navy);
+  opacity: .1; line-height: 1; margin-bottom: 10px;
+}
+.fit-step-icon {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--navy); margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.fit-step-icon svg { width: 20px; height: 20px; stroke: var(--gold-l); fill: none; stroke-width: 1.8; }
+.fit-step-name { font-size: .9rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; word-break: keep-all; }
+.fit-step-desc { font-size: .8rem; color: var(--sub); line-height: 1.65; word-break: keep-all; }
+
+/* ── Bad Fitting Symptoms ── */
+.symptom-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+}
+.symptom-card {
+  background: var(--off); border-radius: var(--r); padding: 24px;
+  border-left: 3px solid var(--gold);
+}
+.symptom-card strong { display: block; color: var(--navy); margin-bottom: 6px; font-size: .95rem; word-break: keep-all; }
+.symptom-card p { font-size: .88rem; color: var(--sub); line-height: 1.75; word-break: keep-all; }
+
+/* ── After-Care ── */
+.care-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.care-card {
+  background: #fff; border-radius: var(--rl); padding: 32px 26px;
+  box-shadow: var(--sh-s); border-top: 3px solid var(--navy);
+  transition: border-top-color .25s, transform .25s;
+}
+.care-card:hover { border-top-color: var(--gold); transform: translateY(-4px); }
+.care-label { font-size: .7rem; font-weight: 700; color: var(--gold); letter-spacing: .1em; margin-bottom: 10px; }
+.care-title { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 10px; word-break: keep-all; }
+.care-desc { font-size: .88rem; color: var(--sub); line-height: 1.8; word-break: keep-all; }
+
+/* ── CTA ── */
+.cta-dark { background: var(--navy); padding: var(--sec-py) 0; text-align: center; }
+
+/* ── Responsive ── */
+@media(max-width:1024px) {
+  .why-split { grid-template-columns: 1fr; }
+  .why-visual { display: none; }
+  .param-grid { grid-template-columns: 1fr 1fr; }
+  .fit-process { grid-template-columns: 1fr 1fr; }
+  .care-grid { grid-template-columns: 1fr 1fr; }
+  .symptom-grid { grid-template-columns: 1fr; }
+}
+@media(max-width:600px) {
+  .param-grid { grid-template-columns: 1fr; }
+  .fit-process { grid-template-columns: 1fr; }
+  .fit-step { border-right: none; border-bottom: 1px solid var(--bdr); }
+  .care-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Readability Enhancements ── */
+.why-lead {
+  font-size: 1.02rem; line-height: 2.0;
+  letter-spacing: .01em; margin-bottom: 32px;
+}
+.why-list { gap: 16px; }
+.why-list-item { padding: 18px 20px; }
+.why-item-desc {
+  font-size: .92rem; line-height: 1.95;
+  letter-spacing: .01em;
+}
+.why-item-title { margin-bottom: 6px; }
+.param-card { padding: 36px 30px; }
+.param-desc {
+  font-size: .9rem; line-height: 1.9;
+  letter-spacing: .01em;
+}
+.param-title { margin-bottom: 12px; }
+.fit-step { padding: 40px 26px; }
+.fit-step-desc {
+  font-size: .83rem; line-height: 1.8;
+  letter-spacing: .01em;
+}
+.symptom-card { padding: 28px 28px; }
+.symptom-card p {
+  font-size: .92rem; line-height: 1.9;
+  letter-spacing: .01em;
+}
+.care-card { padding: 36px 30px; }
+.care-desc {
+  font-size: .92rem; line-height: 1.9;
+  letter-spacing: .01em;
+}
+</style>
+</head>
+<body>
+<div id="ticker-slot"></div>
+
+<!-- ── Breadcrumb ── -->
+<nav class="breadcrumb" style="margin-top:var(--nav-h);">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="services.html">Specialized Optical Care</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>맞춤형 피팅</span>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="svc-hero">
+  <div class="svc-hero-inner">
+    <p class="svc-hero-eyebrow">Specialized Optical Care · Precision Fitting</p>
+    <h1 class="svc-hero-title">맞춤형 피팅<br><em>완성 안경이 얼굴에 맞는 그날까지</em></h1>
+    <p class="svc-hero-desc">
+      아무리 좋은 처방도, 피팅이 틀어지면 시력이 저하되고 두통이 생깁니다.
+      안경테·렌즈·얼굴이 정확히 정렬되도록,
+      3D 피팅 파라미터 측정부터 완성 후 재방문 관리까지 책임집니다.
+    </p>
+    <div class="hero-chips">
+      <div class="hero-chip"><span class="hero-chip-dot"></span>3D 피팅 파라미터 측정</div>
+      <div class="hero-chip"><span class="hero-chip-dot"></span>코받침 정밀 조형</div>
+      <div class="hero-chip"><span class="hero-chip-dot"></span>다리 귀 맞춤 조정</div>
+      <div class="hero-chip"><span class="hero-chip-dot"></span>완성 후 재방문 관리</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Why Fitting Matters ── -->
+<section class="page-sec">
+  <div class="wrap">
+    <div class="why-split rv">
+      <div class="why-visual">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="50" r="14" stroke="#0b1f3a" stroke-width="2"/>
+          <circle cx="68" cy="50" r="14" stroke="#0b1f3a" stroke-width="2"/>
+          <line x1="46" y1="50" x2="54" y2="50" stroke="#0b1f3a" stroke-width="2"/>
+          <line x1="18" y1="50" x2="8" y2="44" stroke="#0b1f3a" stroke-width="2"/>
+          <line x1="82" y1="50" x2="92" y2="44" stroke="#0b1f3a" stroke-width="2"/>
+          <line x1="50" y1="56" x2="50" y2="70" stroke="#0b1f3a" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <line x1="38" y1="62" x2="62" y2="62" stroke="#0b1f3a" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div>
+        <p class="why-label">WHY FITTING MATTERS</p>
+        <h2 class="why-title">피팅이 처방만큼<br>중요한 이유</h2>
+        <p class="why-lead">
+          처방이 완벽해도 안경이 얼굴에서 2mm만 내려가면 누진렌즈의 시야 구역이 달라지고,
+          광학중심이 어긋나 두통이 생깁니다. 피팅은 처방을 완성하는 마지막 단계입니다.
+        </p>
+        <div class="why-list">
+          <div class="why-list-item">
+            <div class="why-icon">01</div>
+            <div>
+              <p class="why-item-title">광학중심 일치 — 처방 효과 실현</p>
+              <p class="why-item-desc">렌즈의 광학중심이 동공과 정확히 일치해야 처방값 그대로의 시력이 구현됩니다. 피팅이 잘못되면 처방 오차와 동일한 문제가 발생합니다.</p>
+            </div>
+          </div>
+          <div class="why-list-item">
+            <div class="why-icon">02</div>
+            <div>
+              <p class="why-item-title">누진 시야 최적화 — 어지러움 방지</p>
+              <p class="why-item-desc">누진렌즈는 착용 높이와 각도에 따라 원거리·근거리 시야 구역이 달라집니다. 정확한 피팅이 누진렌즈 착용감을 결정합니다.</p>
+            </div>
+          </div>
+          <div class="why-list-item">
+            <div class="why-icon">03</div>
+            <div>
+              <p class="why-item-title">장시간 착용 — 코·귀 통증 없애기</p>
+              <p class="why-item-desc">코받침 각도와 다리 형태가 개인 얼굴 형상과 맞지 않으면 장시간 착용 시 통증이 생깁니다. 맞춤 조형으로 8시간 착용에도 편안합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 3D Fitting Parameters ── -->
+<section class="page-sec page-sec--off">
+  <div class="wrap">
+    <div class="s-head rv">
+      <p class="s-label">3D PARAMETERS</p>
+      <h2 class="s-title">누진렌즈 피팅 6가지 파라미터</h2>
+      <p class="s-sub">이 수치들이 개인 맞춤 누진 설계의 기반이 됩니다.</p>
+      <div class="s-divider"></div>
+    </div>
+    <div class="param-grid rv">
+      <div class="param-card">
+        <div class="param-num">01</div>
+        <div class="param-en">Face Form Angle (FFA)</div>
+        <h3 class="param-title">안경 굴곡각</h3>
+        <p class="param-desc">안경 렌즈의 굴곡(curve)이 얼굴 형상과 일치하는지 측정합니다. 차이가 크면 주변부 수차가 증가합니다.</p>
+      </div>
+      <div class="param-card">
+        <div class="param-num">02</div>
+        <div class="param-en">Vertex Distance (VD)</div>
+        <h3 class="param-title">버텍스 거리</h3>
+        <p class="param-desc">각막에서 렌즈 후면까지의 거리(mm). 고도수일수록 이 수치가 처방 효과에 미치는 영향이 커집니다.</p>
+      </div>
+      <div class="param-card">
+        <div class="param-num">03</div>
+        <div class="param-en">Pantoscopic Tilt (PT)</div>
+        <h3 class="param-title">판토스코픽 틸트</h3>
+        <p class="param-desc">렌즈의 아래쪽이 얼굴 쪽으로 기울어진 각도(°). 누진렌즈의 근거리 시야 구역 높이에 영향을 미칩니다.</p>
+      </div>
+      <div class="param-card">
+        <div class="param-num">04</div>
+        <div class="param-en">Fitting Height (FH)</div>
+        <h3 class="param-title">피팅 높이</h3>
+        <p class="param-desc">누진 시작점(원거리→근거리 전환점)의 높이. 동공 중심에서 렌즈 하단까지의 거리(mm)로 설정합니다.</p>
+      </div>
+      <div class="param-card">
+        <div class="param-num">05</div>
+        <div class="param-en">Pupillary Distance (PD)</div>
+        <h3 class="param-title">단안 동공간거리</h3>
+        <p class="param-desc">좌·우 각각의 동공 중심에서 코 중심까지의 거리. 0.1mm 단위로 정밀 측정해 광학중심 편심을 최소화합니다.</p>
+      </div>
+      <div class="param-card">
+        <div class="param-num">06</div>
+        <div class="param-en">Frame Wrap Angle</div>
+        <h3 class="param-title">프레임 랩 앵글</h3>
+        <p class="param-desc">안경테 측면의 휘어짐 정도. 얼굴 형상과 맞지 않으면 렌즈가 한쪽으로 밀려 피팅이 어긋납니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 피팅 프로세스 ── -->
+<section class="page-sec">
+  <div class="wrap">
+    <div class="s-head rv">
+      <p class="s-label">FITTING PROCESS</p>
+      <h2 class="s-title">맞춤형 피팅 4단계</h2>
+      <p class="s-sub">완성 안경이 얼굴에 정확히 맞을 때까지 모든 단계를 직접 진행합니다.</p>
+      <div class="s-divider"></div>
+    </div>
+    <div class="fit-process rv">
+      <div class="fit-step">
+        <div class="fit-step-num">01</div>
+        <div class="fit-step-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+        </div>
+        <div class="fit-step-name">3D 파라미터 측정</div>
+        <div class="fit-step-desc">처방 전 6가지 피팅 파라미터를 정밀 측정해 누진 설계 데이터로 활용</div>
+      </div>
+      <div class="fit-step">
+        <div class="fit-step-num">02</div>
+        <div class="fit-step-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="fit-step-name">코받침 정밀 조형</div>
+        <div class="fit-step-desc">코 형태·높이·각도에 맞게 코받침을 정밀 조형. 흘러내림·코 눌림 해소</div>
+      </div>
+      <div class="fit-step">
+        <div class="fit-step-num">03</div>
+        <div class="fit-step-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="fit-step-name">다리 귀 맞춤 조정</div>
+        <div class="fit-step-desc">귀 모양·위치에 따라 다리 끝 형태를 섬세하게 조형. 장시간 착용도 편안</div>
+      </div>
+      <div class="fit-step">
+        <div class="fit-step-num">04</div>
+        <div class="fit-step-icon">
+          <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div class="fit-step-name">완성 검사 재확인</div>
+        <div class="fit-step-desc">렌즈미터로 광학중심 최종 검증. 처방값 대비 오차를 완성 후 재확인</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 이런 증상이 있다면 ── -->
+<section class="page-sec page-sec--off">
+  <div class="wrap">
+    <div class="s-head rv">
+      <p class="s-label">SYMPTOMS</p>
+      <h2 class="s-title">이런 불편이 있다면 피팅 문제일 수 있습니다</h2>
+      <p class="s-sub">새 안경인데 불편하다면, 처방 오차보다 피팅 문제인 경우가 많습니다.</p>
+      <div class="s-divider"></div>
+    </div>
+    <div class="symptom-grid rv">
+      <div class="symptom-card">
+        <strong>안경이 자꾸 흘러내린다</strong>
+        <p>코받침 각도가 코 형태와 맞지 않거나, 다리 텐션이 부족한 경우입니다. 코받침 조형과 다리 클로징 조정으로 해결합니다.</p>
+      </div>
+      <div class="symptom-card">
+        <strong>장시간 착용 시 귀가 아프다</strong>
+        <p>다리 끝이 귀 뒤 형태와 맞지 않아 특정 부위에 압박이 집중됩니다. 개인 귀 모양에 맞춰 다리를 재조형합니다.</p>
+      </div>
+      <div class="symptom-card">
+        <strong>누진안경인데 근거리가 안 보인다</strong>
+        <p>피팅 높이(Fitting Height)가 낮거나, 안경이 내려앉아 근거리 시야 구역을 사용하지 못하는 경우입니다.</p>
+      </div>
+      <div class="symptom-card">
+        <strong>새 안경인데 원인 모를 두통이 생긴다</strong>
+        <p>광학중심이 동공 위치와 어긋나 프리즘 오차가 발생한 경우일 수 있습니다. 피팅 재점검과 렌즈미터 재검증을 권장합니다.</p>
+      </div>
+      <div class="symptom-card">
+        <strong>얼굴이 비대칭이라 피팅이 항상 어려웠다</strong>
+        <p>좌우 귀 위치나 코 높이가 다른 경우, 각 부위를 개별적으로 조형하는 비대칭 피팅으로 해결합니다.</p>
+      </div>
+      <div class="symptom-card">
+        <strong>코 위에 자국이 계속 남는다</strong>
+        <p>코받침 소재나 각도가 맞지 않아 압박이 발생한 경우입니다. 실리콘 코받침 교체 또는 각도 재조정으로 해결 가능합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 애프터케어 ── -->
+<section class="page-sec">
+  <div class="wrap">
+    <div class="s-head rv">
+      <p class="s-label">AFTER-CARE</p>
+      <h2 class="s-title">착용 완료 후 관리 서비스</h2>
+      <p class="s-sub">안경을 받은 뒤에도 조성인 안경원의 서비스는 계속됩니다.</p>
+      <div class="s-divider"></div>
+    </div>
+    <div class="care-grid rv">
+      <div class="care-card">
+        <div class="care-label">WEEK 1~2</div>
+        <h3 class="care-title">재방문 미세 조정</h3>
+        <p class="care-desc">착용 1~2주 후 재방문으로 미세 피팅 조정을 무상 제공합니다. 착용 후 발견되는 미세한 불편을 빠르게 해결합니다.</p>
+      </div>
+      <div class="care-card">
+        <div class="care-label">ON-GOING</div>
+        <h3 class="care-title">착용 습관 교육</h3>
+        <p class="care-desc">누진렌즈 시선 이동법, 안경 착용/보관 습관, 피팅 유지 관리법 등 실용적인 안경 생활 교육을 함께 제공합니다.</p>
+      </div>
+      <div class="care-card">
+        <div class="care-label">ANYTIME</div>
+        <h3 class="care-title">피팅 재조정 서비스</h3>
+        <p class="care-desc">착용 중 피팅이 변형되거나 불편함이 생기면 언제든 방문해 조정받을 수 있습니다. 조성인 안경원 구매 제품에 한합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-dark">
+  <div class="wrap">
+    <p style="font-size:.72rem; font-weight:700; letter-spacing:.2em; color:var(--gold-l); text-transform:uppercase; margin-bottom:18px; display:block;">RESERVATION</p>
+    <h2 class="s-title s-title--lt">완성 안경이 얼굴에 맞을 때까지</h2>
+    <p class="s-sub s-sub--lt" style="margin-bottom:40px;">
+      처방이 끝이 아닙니다. 피팅이 처방을 완성합니다.<br>
+      조성인 안경원의 맞춤형 피팅 서비스를 경험해 보세요.
+    </p>
+  </div>
+</section>
+
+<script src="js/components.js"></script>
+<script src="js/common.js"></script>
+</body>
+</html>
