@@ -40,28 +40,28 @@
   50%      { opacity: 1;  transform: scale(1.012); }
 }
 
-/* ── 슬라이드쇼 크로스페이드 + kenburns (24s 루프) ── */
-/* 슬라이드1: 0~46% on → 54%에 완전 페이드아웃, 95%부터 다시 준비 */
+/* ── 슬라이드쇼 크로스페이드 + kenburns (26s 루프) ── */
+/* 슬라이드1: 0~44% on → 천천히 페이드아웃 */
 @keyframes hero-slide-1 {
-  0%,46%  { opacity: 1; }
-  56%     { opacity: 0; }
-  94%,100%{ opacity: 0; }
+  0%, 42% { opacity: 1; }
+  54%     { opacity: 0; }
+  96%,100%{ opacity: 0; }
 }
-/* 슬라이드2: 48%까지 off → 55% 완전 페이드인 → 95% 유지 */
+/* 슬라이드2: 50% 페이드인 → 96% 유지 */
 @keyframes hero-slide-2 {
-  0%,48%  { opacity: 0; }
-  55%     { opacity: 1; }
-  95%,100%{ opacity: 1; }
+  0%, 50% { opacity: 0; }
+  58%     { opacity: 1; }
+  96%,100%{ opacity: 1; }
 }
-/* kenburns-1: 청중 전경 — 줌아웃 당기며 우상→좌하 드라이브 */
+/* kenburns-1: 강연자 A (손짓) — 줌인하며 좌→우 드리프트, 강연자 우측에 안착 */
 @keyframes kenburns-1 {
-  0%   { transform: scale(1.12) translate( 2.8%,  1.8%); }
-  100% { transform: scale(1.0)  translate(-1.8%, -1.0%); }
+  0%   { transform: scale(1.0)  translate(-1.2%, 0.6%); }
+  100% { transform: scale(1.08) translate( 1.4%, -0.8%); }
 }
-/* kenburns-2: 강의자 — 줌인 밀며 좌하→우상 반대 궤적 */
+/* kenburns-2: 강연자 B (정면) — 살짝 당기며 상→하 드리프트 */
 @keyframes kenburns-2 {
-  0%   { transform: scale(1.0)  translate(-2.6%,  1.2%); }
-  100% { transform: scale(1.12) translate( 1.6%, -1.4%); }
+  0%   { transform: scale(1.08) translate(0.6%, -1.0%); }
+  100% { transform: scale(1.0)  translate(-0.8%, 0.6%); }
 }
 
 /* ── Hero 전체 컨테이너 ── */
@@ -97,26 +97,26 @@
   will-change: transform;
 }
 
-/* 슬라이드 1: 청중 전경 (넓은 앵글, 먼저 보임) */
+/* 슬라이드 1: 강연자 A (손짓 — 우측 구도) */
 .hero-slide:nth-child(1) {
   opacity: 1;
-  animation: hero-slide-1 24s cubic-bezier(0.45,0,0.55,1) infinite;
+  animation: hero-slide-1 26s ease-in-out infinite;
 }
 .hero-slide:nth-child(1) img {
-  /* 강의자 얼굴(우측 중상단)이 오버레이 밖에 드러나도록 */
-  object-position: 72% 20%;
-  animation: kenburns-1 24s cubic-bezier(0.45,0,0.55,1) infinite;
+  /* 강연자 우측 중앙, 배경 왼쪽 여백 활용 */
+  object-position: 68% 22%;
+  animation: kenburns-1 26s ease-in-out infinite;
 }
 
-/* 슬라이드 2: 강의자 제스처 클로즈업 */
+/* 슬라이드 2: 강연자 B (정면 — 중앙 구도) */
 .hero-slide:nth-child(2) {
   opacity: 0;
-  animation: hero-slide-2 24s cubic-bezier(0.45,0,0.55,1) infinite;
+  animation: hero-slide-2 26s ease-in-out infinite;
 }
 .hero-slide:nth-child(2) img {
-  /* 제스처 + 화면 슬라이드 모두 포함 */
-  object-position: 74% 18%;
-  animation: kenburns-2 24s cubic-bezier(0.45,0,0.55,1) infinite;
+  /* 강연자 중앙, 청중 전경 */
+  object-position: 60% 20%;
+  animation: kenburns-2 26s ease-in-out infinite;
 }
 
 /* ── 멀티레이어 오버레이 ── */
@@ -944,8 +944,8 @@
     min-height: 100svh;
   }
   /* 강의자 모바일 프레이밍 — 상단 18% 유지로 얼굴 보이도록 */
-  .hero-slide:nth-child(1) img { object-position: 68% 18%; }
-  .hero-slide:nth-child(2) img { object-position: 52% 18%; }
+  .hero-slide:nth-child(1) img { object-position: 65% 18%; }
+  .hero-slide:nth-child(2) img { object-position: 55% 18%; }
   .hero-slide-dots { display: none; }
   .hero-body {
     padding-top: 28px;
@@ -1000,13 +1000,13 @@
   <div class="hero-bg">
     <!-- 슬라이드 1: 청중 전경 (넓은 앵글) — 먼저 보임 -->
     <div class="hero-slide">
-      <img src="img/hero-bg.jpg?v=5"
+      <img src="img/hero-bg.jpg?v=6"
            alt="안경사 조성인 — 대전보건대학교 특강 강의 전경"
            loading="eager" fetchpriority="high"/>
     </div>
     <!-- 슬라이드 2: 강의자 제스처 클로즈업 -->
     <div class="hero-slide">
-      <img src="img/hero-bg2.jpg?v=5"
+      <img src="img/hero-bg2.jpg?v=6"
            alt="안경사 조성인 — 주변부 왜곡 강의 장면"
            loading="eager"/>
     </div>
@@ -1031,8 +1031,8 @@
 
   <!-- 슬라이드 진행 도트 -->
   <div class="hero-slide-dots" id="heroDots">
-    <div class="hero-slide-dot active" style="--dot-dur:12s"></div>
-    <div class="hero-slide-dot"        style="--dot-dur:12s"></div>
+    <div class="hero-slide-dot active" style="--dot-dur:13s"></div>
+    <div class="hero-slide-dot"        style="--dot-dur:13s"></div>
   </div>
 
   <!-- 사진 크레딧 -->
