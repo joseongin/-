@@ -41,27 +41,27 @@
 }
 
 /* ── 슬라이드쇼 크로스페이드 + kenburns (24s 루프) ── */
-/* 슬라이드1: 0~50% on, 50~58% 페이드아웃 */
+/* 슬라이드1: 0~46% on → 54%에 완전 페이드아웃, 95%부터 다시 준비 */
 @keyframes hero-slide-1 {
-  0%,45%  { opacity: 1; }
-  57%     { opacity: 0; }
-  96%,100%{ opacity: 0; }
+  0%,46%  { opacity: 1; }
+  56%     { opacity: 0; }
+  94%,100%{ opacity: 0; }
 }
-/* 슬라이드2: 0~47% off, 50~96% on */
+/* 슬라이드2: 48%까지 off → 55% 완전 페이드인 → 95% 유지 */
 @keyframes hero-slide-2 {
-  0%,47%  { opacity: 0; }
-  52%     { opacity: 1; }
-  96%,100%{ opacity: 1; }
+  0%,48%  { opacity: 0; }
+  55%     { opacity: 1; }
+  95%,100%{ opacity: 1; }
 }
-/* kenburns-1: 청중 전경 — 살짝 당기며 좌→우 패닝 */
+/* kenburns-1: 청중 전경 — 줌아웃 당기며 우상→좌하 드라이브 */
 @keyframes kenburns-1 {
-  0%   { transform: scale(1.06) translate( 1.0%,  0.5%); }
-  100% { transform: scale(1.0)  translate(-0.8%, -0.3%); }
+  0%   { transform: scale(1.12) translate( 2.8%,  1.8%); }
+  100% { transform: scale(1.0)  translate(-1.8%, -1.0%); }
 }
-/* kenburns-2: 강의자 — 살짝 밀며 우→좌 패닝 */
+/* kenburns-2: 강의자 — 줌인 밀며 좌하→우상 반대 궤적 */
 @keyframes kenburns-2 {
-  0%   { transform: scale(1.0)  translate(-1.0%, 0.4%); }
-  100% { transform: scale(1.06) translate( 0.8%, -0.4%); }
+  0%   { transform: scale(1.0)  translate(-2.6%,  1.2%); }
+  100% { transform: scale(1.12) translate( 1.6%, -1.4%); }
 }
 
 /* ── Hero 전체 컨테이너 ── */
@@ -92,28 +92,31 @@
 .hero-slide img {
   width: 100%; height: 100%;
   object-fit: cover;
-  filter: brightness(0.80) contrast(1.06) saturate(1.05);
+  /* 밝기 낮추되 대비·채도는 살려 선명하게 */
+  filter: brightness(0.78) contrast(1.09) saturate(1.07);
   will-change: transform;
 }
 
 /* 슬라이드 1: 청중 전경 (넓은 앵글, 먼저 보임) */
 .hero-slide:nth-child(1) {
   opacity: 1;
-  animation: hero-slide-1 24s ease-in-out infinite;
+  animation: hero-slide-1 24s cubic-bezier(0.45,0,0.55,1) infinite;
 }
 .hero-slide:nth-child(1) img {
-  object-position: 68% 22%;
-  animation: kenburns-1 24s ease-in-out infinite;
+  /* 강의자 얼굴(우측 중상단)이 오버레이 밖에 드러나도록 */
+  object-position: 72% 20%;
+  animation: kenburns-1 24s cubic-bezier(0.45,0,0.55,1) infinite;
 }
 
 /* 슬라이드 2: 강의자 제스처 클로즈업 */
 .hero-slide:nth-child(2) {
   opacity: 0;
-  animation: hero-slide-2 24s ease-in-out infinite;
+  animation: hero-slide-2 24s cubic-bezier(0.45,0,0.55,1) infinite;
 }
 .hero-slide:nth-child(2) img {
-  object-position: 70% 18%;
-  animation: kenburns-2 24s ease-in-out infinite;
+  /* 제스처 + 화면 슬라이드 모두 포함 */
+  object-position: 74% 18%;
+  animation: kenburns-2 24s cubic-bezier(0.45,0,0.55,1) infinite;
 }
 
 /* ── 멀티레이어 오버레이 ── */
@@ -121,19 +124,23 @@
   position: absolute; inset: 0;
   z-index: 1;
   background:
-    linear-gradient(105deg,
-      rgba(6,16,32,.94) 0%,
-      rgba(6,16,32,.82) 28%,
-      rgba(6,16,32,.38) 52%,
-      rgba(6,16,32,.0)  72%
+    /* 좌측 텍스트 영역 진하게, 우측 사진은 자연스럽게 노출 */
+    linear-gradient(108deg,
+      rgba(6,16,32,.96) 0%,
+      rgba(6,16,32,.86) 26%,
+      rgba(6,16,32,.42) 50%,
+      rgba(6,16,32,.08) 68%,
+      rgba(6,16,32,.0)  76%
     ),
+    /* 상단 네비 아래 살짝 */
     linear-gradient(to bottom,
-      rgba(6,16,32,.55) 0%,
-      transparent 18%
+      rgba(6,16,32,.52) 0%,
+      transparent 16%
     ),
+    /* 하단 stats 바 위 자연스럽게 */
     linear-gradient(to top,
-      rgba(6,16,32,.90) 0%,
-      transparent 28%
+      rgba(6,16,32,.88) 0%,
+      transparent 26%
     );
   pointer-events: none;
 }
@@ -173,7 +180,7 @@
   border-radius: 1px;
 }
 .hero-slide-dot.active {
-  width: 36px;
+  width: 48px;
   background: rgba(255,255,255,.15);
 }
 .hero-slide-dot.active::after {
@@ -989,13 +996,13 @@
   <div class="hero-bg">
     <!-- 슬라이드 1: 청중 전경 (넓은 앵글) — 먼저 보임 -->
     <div class="hero-slide">
-      <img src="img/hero-bg.jpg?v=4"
+      <img src="img/hero-bg.jpg?v=5"
            alt="안경사 조성인 — 대전보건대학교 특강 강의 전경"
            loading="eager" fetchpriority="high"/>
     </div>
     <!-- 슬라이드 2: 강의자 제스처 클로즈업 -->
     <div class="hero-slide">
-      <img src="img/hero-bg2.jpg?v=4"
+      <img src="img/hero-bg2.jpg?v=5"
            alt="안경사 조성인 — 주변부 왜곡 강의 장면"
            loading="eager"/>
     </div>
