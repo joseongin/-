@@ -55,21 +55,48 @@
 }
 .svc-grid.reverse { grid-template-columns: 1fr 440px; }
 .svc-img-wrap {
+  position: relative;
   border-radius: var(--rl);
   overflow: hidden;
-  box-shadow: var(--sh-m);
-  position: relative;
+  box-shadow: 0 28px 72px rgba(11,31,58,.18), 0 0 0 1px rgba(184,147,100,.18);
 }
 .svc-img-wrap img {
   width: 100%; aspect-ratio: 4/3;
   object-fit: cover; display: block;
-  background: linear-gradient(135deg, #d8e4f0 0%, #b8c8e0 100%);
+  background: #d8e4f0;
+  transition: transform 1s cubic-bezier(0.76,0,0.24,1);
+}
+.svc-img-wrap:hover img { transform: scale(1.04); }
+/* 골드 아웃라인 프레임 */
+.svc-img-wrap::before {
+  content: '';
+  position: absolute; top: -16px; left: -16px; right: 32px; bottom: 32px;
+  border: 1px solid rgba(184,147,100,.2);
+  border-radius: calc(var(--rl) + 2px);
+  pointer-events: none; z-index: 0;
+}
+/* 하단 네이비 그라디언트 */
+.svc-img-wrap::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(11,31,58,.28) 0%,
+    transparent 45%
+  );
+  pointer-events: none;
 }
 .svc-img-badge {
-  position: absolute; top: 20px; left: 20px;
-  background: var(--navy); color: var(--gold);
-  font-size: .72rem; font-weight: 800; letter-spacing: .1em;
-  padding: 6px 14px; border-radius: 30px;
+  position: absolute; z-index: 2;
+  bottom: 20px; left: 20px;
+  background: rgba(11,31,58,.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(184,147,100,.32);
+  border-radius: 3px;
+  padding: 8px 16px;
+  color: var(--gold-l);
+  font-size: .68rem; font-weight: 700; letter-spacing: .14em;
   text-transform: uppercase;
 }
 
@@ -240,8 +267,8 @@
   <div class="wrap">
     <div class="svc-grid rv">
       <div class="svc-img-wrap">
-        <img src="img/hero-bg.jpg" alt="정밀 검안 장면"/>
-        <span class="svc-img-badge">01 OPTOMETRY</span>
+        <img src="img/services-optometry.jpg" alt="각막지형도 정밀 검안"/>
+        <div class="svc-img-badge">01 · OPTOMETRY</div>
       </div>
       <div>
         <p class="svc-eyebrow">&#9670; SPECIALTY 01</p>
@@ -349,8 +376,8 @@
         </div>
       </div>
       <div class="svc-img-wrap">
-        <img src="img/services-progressive.jpg" alt="누진다초점 렌즈 제작"/>
-        <span class="svc-img-badge">02 PROGRESSIVE</span>
+        <img src="img/services-progressive.jpg" alt="ZEISS 누진다초점 안경"/>
+        <div class="svc-img-badge">02 · PROGRESSIVE</div>
       </div>
     </div>
   </div>
@@ -361,8 +388,8 @@
   <div class="wrap">
     <div class="svc-grid rv">
       <div class="svc-img-wrap">
-        <img src="img/services-fitting.jpg" alt="고도수 안경 제작"/>
-        <span class="svc-img-badge">03 HIGH POWER</span>
+        <img src="img/services-highpower.jpg" alt="고도수 안경 정밀 제작"/>
+        <div class="svc-img-badge">03 · HIGH POWER</div>
       </div>
       <div>
         <p class="svc-eyebrow">&#9670; SPECIALTY 03</p>
@@ -469,8 +496,8 @@
         </div>
       </div>
       <div class="svc-img-wrap">
-        <img src="img/hero-bg.jpg" alt="어린이 시력검사"/>
-        <span class="svc-img-badge">04 MYOPIA CONTROL</span>
+        <img src="img/services-myopia.jpg" alt="성장기 근시 억제 케어"/>
+        <div class="svc-img-badge">04 · MYOPIA CONTROL</div>
       </div>
     </div>
   </div>
@@ -481,8 +508,8 @@
   <div class="wrap">
     <div class="svc-grid rv">
       <div class="svc-img-wrap">
-        <img src="img/services-progressive.jpg" alt="안질환 보조 교정"/>
-        <span class="svc-img-badge">05 EYE CONDITIONS</span>
+        <img src="img/services-eyecondition.jpg" alt="안질환 보조 교정"/>
+        <div class="svc-img-badge">05 · EYE CONDITIONS</div>
       </div>
       <div>
         <p class="svc-eyebrow">&#9670; SPECIALTY 05</p>
@@ -590,7 +617,7 @@
       </div>
       <div class="svc-img-wrap">
         <img src="img/services-fitting.jpg" alt="정밀 피팅 과정"/>
-        <span class="svc-img-badge">06 PRECISION FITTING</span>
+        <div class="svc-img-badge">06 · PRECISION FITTING</div>
       </div>
     </div>
   </div>
