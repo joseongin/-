@@ -52,21 +52,22 @@
   62.5%    { opacity: 1; }
   100%     { opacity: 1; }
 }
-/* 슬라이드별 켄번스 패럴랙스 */
+/* 슬라이드별 켄번스 패럴랙스 — 더 역동적인 줌+팬 */
 @keyframes kenburns-1 {
-  0%   { transform: scale(1.08) translateX(0)    translateY(0); }
-  100% { transform: scale(1.0)  translateX(-1.2%) translateY(-.4%); }
+  0%   { transform: scale(1.12) translateX(2%)   translateY(1%); }
+  100% { transform: scale(1.0)  translateX(-1.5%) translateY(-0.5%); }
 }
 @keyframes kenburns-2 {
-  0%   { transform: scale(1.0)  translateX(1.2%)  translateY(.4%); }
-  100% { transform: scale(1.08) translateX(0)     translateY(0); }
+  0%   { transform: scale(1.0)  translateX(-2%)  translateY(-1%); }
+  100% { transform: scale(1.12) translateX(1.5%) translateY(0.5%); }
 }
 
 /* ── Hero 전체 컨테이너 ── */
 .hero {
   position: relative;
-  height: 100vh;
-  min-height: 700px;
+  height: 82vh;
+  min-height: 600px;
+  max-height: 860px;
   display: flex;
   flex-direction: column;
   padding-top: var(--nav-h);
@@ -117,18 +118,18 @@
   z-index: 1;
   background:
     linear-gradient(108deg,
-      rgba(6,16,32,.96) 0%,
-      rgba(6,16,32,.86) 32%,
-      rgba(6,16,32,.50) 55%,
-      rgba(6,16,32,.05) 100%
+      rgba(6,16,32,.92) 0%,
+      rgba(6,16,32,.80) 30%,
+      rgba(6,16,32,.40) 56%,
+      rgba(6,16,32,.0) 100%
     ),
     linear-gradient(to bottom,
-      rgba(6,16,32,.54) 0%,
-      transparent 25%
+      rgba(6,16,32,.5) 0%,
+      transparent 22%
     ),
     linear-gradient(to top,
-      rgba(6,16,32,.92) 0%,
-      transparent 36%
+      rgba(6,16,32,.88) 0%,
+      transparent 32%
     );
   pointer-events: none;
 }
@@ -429,37 +430,49 @@
   background: var(--off);
 }
 .intro-cards-stack {
-  display: flex; flex-direction: column; gap: 2px;
+  display: flex; flex-direction: column; gap: 3px;
 }
 .intro-card-h {
-  background: #fff; padding: 32px 36px;
+  background: #fff; padding: 28px 32px;
   border-left: 3px solid transparent;
-  transition: border-left-color .3s, box-shadow .3s, transform .3s;
+  transition: border-left-color .35s, box-shadow .35s, transform .35s;
   position: relative;
   cursor: default;
+  text-decoration: none;
+  display: block;
 }
 .intro-card-h:hover {
   border-left-color: var(--gold);
   box-shadow: var(--sh-m);
-  transform: translateX(6px);
+  transform: translateX(8px);
   z-index: 2;
 }
 .intro-card-h-num {
-  font-size: .65rem; font-weight: 700; color: var(--gold);
-  letter-spacing: .14em; margin-bottom: 10px;
+  font-size: .62rem; font-weight: 700; color: var(--gold);
+  letter-spacing: .18em; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.intro-card-h-num::before {
+  content: ''; display: inline-block;
+  width: 18px; height: 1px; background: var(--gold); flex-shrink: 0;
 }
 .intro-card-h h3 {
-  font-size: 1.05rem; font-weight: 800; color: var(--navy);
-  line-height: 1.4; margin-bottom: 10px; word-break: keep-all;
+  font-size: 1.0rem; font-weight: 800; color: var(--navy);
+  line-height: 1.45; margin-bottom: 8px; word-break: keep-all;
+  letter-spacing: -.02em;
 }
 .intro-card-h p {
-  font-size: .92rem; color: var(--sub);
-  line-height: 1.82; word-break: keep-all;
+  font-size: .87rem; color: var(--sub);
+  line-height: 1.85; word-break: keep-all;
 }
-.intro-card-h a {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: .8rem; font-weight: 700; color: var(--navy-2);
-  margin-top: 12px;
+.intro-card-h-arrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .78rem; font-weight: 700; color: var(--navy-2);
+  margin-top: 10px;
+  transition: gap .25s, color .25s;
+}
+.intro-card-h:hover .intro-card-h-arrow {
+  gap: 10px; color: var(--gold-d);
 }
 
 /* ══════════════════════════════════════
@@ -1137,21 +1150,21 @@
     <div class="intro-cards-stack">
       <a href="about.html" class="intro-card-h sr d2">
         <div class="intro-card-h-num">01 · About</div>
-        <h3>안경사 조성인 — 20년 임상의 축적</h3>
+        <h3>임상 전문 안경사 — 20년의 축적</h3>
         <p>보건대학교 특강 교수, 옵토메트리스트 3기, 피팅 마스터 수료. 오직 정확하고 편안한 안경만을 연구해온 임상 전문가입니다.</p>
-        <a href="about.html">자세히 보기 &#8594;</a>
+        <span class="intro-card-h-arrow">자세히 보기 &#8594;</span>
       </a>
       <a href="equipment.html" class="intro-card-h sr d3">
         <div class="intro-card-h-num">02 · Equipment</div>
-        <h3>첨단 장비 — ZEISS i.Profiler® plus</h3>
+        <h3>정밀 검안 — ZEISS 웨이브프론트 분석</h3>
         <p>웨이브프론트 수차분석, 각막지형도, 동공 측정을 한 번에. 일반 검사가 놓치는 미세한 광학 오차까지 잡아냅니다.</p>
-        <a href="equipment.html">자세히 보기 &#8594;</a>
+        <span class="intro-card-h-arrow">자세히 보기 &#8594;</span>
       </a>
       <a href="services.html" class="intro-card-h sr d4">
         <div class="intro-card-h-num">03 · Services</div>
-        <h3>전문 분야 — 6가지 특화 임상 케어</h3>
+        <h3>자이스 정밀 장비 — 6가지 특화 임상 케어</h3>
         <p>누진다초점, 고도수, 성장기 근시 억제, 안질환 케어, 정밀 피팅. 맞춤형 임상 케어를 제공합니다.</p>
-        <a href="services.html">자세히 보기 &#8594;</a>
+        <span class="intro-card-h-arrow">자세히 보기 &#8594;</span>
       </a>
     </div>
   </div>
