@@ -51,21 +51,21 @@
   56%     { opacity: 1; }
   96%,100%{ opacity: 1; }
 }
-/* ── 감각적 Parallax Pan (scale 없음, 글씨 깨짐 방지) ── */
+/* ── Pan 애니메이션: scale=1 엄격 고정, translate 극소화 ── */
 @keyframes kpan-1 {
-  0%   { transform: translate(0%,    0%)    scale(1.0); }
-  50%  { transform: translate(-0.8%, -0.5%) scale(1.0); }
-  100% { transform: translate(-1.2%, -0.2%) scale(1.0); }
+  0%   { transform: translate(0%,     0%    ) scale(1); }
+  50%  { transform: translate(-0.4%, -0.25%) scale(1); }
+  100% { transform: translate(-0.7%, -0.1% ) scale(1); }
 }
 @keyframes kpan-2 {
-  0%   { transform: translate(1.0%,  0.3%)  scale(1.0); }
-  50%  { transform: translate(0.2%, -0.3%)  scale(1.0); }
-  100% { transform: translate(-0.5%, 0.1%)  scale(1.0); }
+  0%   { transform: translate(0.4%,  0.1% ) scale(1); }
+  50%  { transform: translate(0.1%, -0.2% ) scale(1); }
+  100% { transform: translate(-0.3%, 0.05%) scale(1); }
 }
-/* ── 우측 이미지 밝기 펄스 (강연자 존재감 강조) ── */
+/* ── 우측(강연자) 지역 미세 밝기 펄스 ── */
 @keyframes img-pulse {
-  0%, 100% { filter: brightness(0.80) contrast(1.10) saturate(1.08); }
-  50%      { filter: brightness(0.86) contrast(1.08) saturate(1.12); }
+  0%, 100% { filter: brightness(0.82) contrast(1.08) saturate(1.06); }
+  50%      { filter: brightness(0.88) contrast(1.06) saturate(1.10); }
 }
 
 /* ── Hero 전체 컨테이너 ── */
@@ -96,55 +96,56 @@
 .hero-slide img {
   width: 100%; height: 100%;
   object-fit: cover;
-  filter: brightness(0.80) contrast(1.10) saturate(1.08);
+  filter: brightness(0.82) contrast(1.08) saturate(1.06);
   will-change: transform;
-  animation: img-pulse 8s ease-in-out infinite;
 }
 
-/* 슬라이드 1: 강연자 A — 오른쪽 배치 */
+/* 슬라이드 1: 강연자 A (TO06IRoo) — 우측 72% */
 .hero-slide:nth-child(1) {
   opacity: 1;
   animation: hero-slide-1 22s cubic-bezier(.4,0,.2,1) infinite;
 }
 .hero-slide:nth-child(1) img {
-  /* 강연자 x=60%, 얼굴 y=45% */
-  object-position: 60% 40%;
-  animation: kpan-1 22s ease-in-out infinite, img-pulse 8s ease-in-out infinite;
+  /* 강연자 얼굴 x=72%, y=25% */
+  object-position: 72% 25%;
+  animation: kpan-1 22s ease-in-out infinite;
 }
 
-/* 슬라이드 2: 강연자 B — flip으로 오른쪽 배치 */
+/* 슬라이드 2: 강연자 B (PEkAv468) — 우측 76% */
 .hero-slide:nth-child(2) {
   opacity: 0;
   animation: hero-slide-2 22s cubic-bezier(.4,0,.2,1) infinite;
 }
 .hero-slide:nth-child(2) img {
-  /* flip 후 강연자 x=77%, y=38% */
-  object-position: 77% 38%;
-  animation: kpan-2 22s ease-in-out infinite, img-pulse 8s ease-in-out 4s infinite;
+  /* 강연자 얼굴 x=76%, y=28% */
+  object-position: 76% 28%;
+  animation: kpan-2 22s ease-in-out infinite;
 }
 
-/* ── 멀티레이어 오버레이 ── */
+/* ── 멀티레이어 오버레이 ──
+   주치: 텍스트 좌측은 트랜스페런트, 우측(강연자+화면)은 navy로 주텔이음 */
 .hero-ov {
   position: absolute; inset: 0;
   z-index: 1;
   background:
-    /* 좌측 텍스트 영역 진하게, 우측 사진은 자연스럽게 노출 */
-    linear-gradient(108deg,
-      rgba(6,16,32,.96) 0%,
-      rgba(6,16,32,.86) 26%,
-      rgba(6,16,32,.42) 50%,
-      rgba(6,16,32,.08) 68%,
-      rgba(6,16,32,.0)  76%
+    /* 우측 navy: 강연자+슬라이드가 navy 톤에 자연스럽게 스민 */
+    linear-gradient(to right,
+      rgba(6,16,32,.0)   0%,
+      rgba(6,16,32,.0)  28%,
+      rgba(6,16,32,.08) 40%,
+      rgba(6,16,32,.35) 56%,
+      rgba(6,16,32,.70) 76%,
+      rgba(6,16,32,.88) 100%
     ),
-    /* 상단 네비 아래 살짝 */
+    /* 상단 네비 아래 미세 */
     linear-gradient(to bottom,
-      rgba(6,16,32,.52) 0%,
-      transparent 16%
+      rgba(6,16,32,.45) 0%,
+      transparent 14%
     ),
-    /* 하단 stats 바 위 자연스럽게 */
+    /* 하단 stats 바 위 */
     linear-gradient(to top,
-      rgba(6,16,32,.88) 0%,
-      transparent 26%
+      rgba(6,16,32,.85) 0%,
+      transparent 24%
     );
   pointer-events: none;
 }
@@ -948,8 +949,8 @@
     min-height: 100svh;
   }
   /* 강의자 모바일 프레이밍 — 상단 18% 유지로 얼굴 보이도록 */
-  .hero-slide:nth-child(1) img { object-position: 60% 35%; }
-  .hero-slide:nth-child(2) img { object-position: 77% 35%; }
+  .hero-slide:nth-child(1) img { object-position: 72% 22%; }
+  .hero-slide:nth-child(2) img { object-position: 76% 25%; }
   .hero-slide-dots { display: none; }
   .hero-body {
     padding-top: 28px;
@@ -1004,13 +1005,13 @@
   <div class="hero-bg">
     <!-- 슬라이드 1: 청중 전경 (넓은 앵글) — 먼저 보임 -->
     <div class="hero-slide">
-      <img src="img/hero-bg.jpg?v=9"
+      <img src="img/hero-bg.jpg?v=10"
            alt="안경사 조성인 — 대전보건대학교 특강 강의 전경"
            loading="eager" fetchpriority="high"/>
     </div>
     <!-- 슬라이드 2: 강의자 제스처 클로즈업 -->
     <div class="hero-slide">
-      <img src="img/hero-bg2.jpg?v=9"
+      <img src="img/hero-bg2.jpg?v=10"
            alt="안경사 조성인 — 주변부 왜곡 강의 장면"
            loading="eager"/>
     </div>
