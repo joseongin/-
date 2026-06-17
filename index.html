@@ -743,6 +743,19 @@
   max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px);
   display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center;
 }
+/* 사진 없는 버전: 인용문 3열 그리드로 넓게 표시 */
+.quote-band-inner--no-img {
+  grid-template-columns: 1fr;
+  max-width: 900px;
+}
+.quote-band-inner--no-img .quote-list {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+.quote-band-inner--no-img .quote-item {
+  flex: 1 1 240px;
+}
 .quote-band-img {
   border-radius: var(--rl); overflow: hidden;
   box-shadow: 0 24px 72px rgba(0,0,0,.5);
@@ -947,13 +960,13 @@
   <div class="hero-bg">
     <!-- 슬라이드 1: lecture-2 (강의자 우측 클로즈업) -->
     <div class="hero-slide">
-      <img src="img/hero-bg.jpg?v=2"
+      <img src="img/hero-bg.jpg?v=3"
            alt="안경사 조성인 — 대전보건대학교 특강 강의 장면"
            loading="eager" fetchpriority="high"/>
     </div>
     <!-- 슬라이드 2: lecture-1 (강의실 전경 + 청중) -->
     <div class="hero-slide">
-      <img src="img/hero-bg2.jpg?v=2"
+      <img src="img/hero-bg2.jpg?v=3"
            alt="안경사 조성인 — 주변부 왜곡 강의 전경"
            loading="eager"/>
     </div>
@@ -1366,10 +1379,7 @@
      QUOTE / TESTIMONIAL BAND
 ══════════════════════════════════════ -->
 <section class="quote-band">
-  <div class="quote-band-inner">
-    <div class="quote-band-img sr sr-left">
-      <img src="img/quote-clinical.jpg" alt="임상 검안 장면"/>
-    </div>
+  <div class="quote-band-inner quote-band-inner--no-img">
     <div class="quote-list sr sr-right">
       <div class="s-label" style="color:var(--gold-l); margin-bottom:24px; letter-spacing:.2em;">CUSTOMER VOICES</div>
       <div class="quote-item">
